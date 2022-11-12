@@ -32,3 +32,7 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+
+### Map providers
+See [This Site](https://leaflet-extras.github.io/leaflet-providers/preview/)

@@ -1,9 +1,5 @@
 <template>
-  <div id="app">
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </nav>
+  <div id="app" class="container-fluid p-0">
     <router-view/>
   </div>
 </template>
