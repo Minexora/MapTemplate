@@ -12,6 +12,7 @@
         <!-- TODO: Buraya menu componenti yazılacak! -->
         <b-button @click="showModal">Open Modal</b-button>
         <b-modals :isShow.sync="modal"  :size="'xl'" :title="'Deneme'" />
+        <car-list />
       </template>
   </b-sidebar>
 </template>
@@ -19,12 +20,15 @@
 <script>
 import { BSidebar } from 'bootstrap-vue'
 import ModalComponent from '@/components/ModalComponent.vue'
+import CarListComponent from '@/components/Cars/CarListComponent.vue'
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: 'Sidebar',
   components: {
     'b-sidebar': BSidebar,
-    'b-modals': ModalComponent
+    'b-modals': ModalComponent,
+    // eslint-disable-next-line vue/no-unused-components
+    'car-list': CarListComponent
   },
   data () {
     return {

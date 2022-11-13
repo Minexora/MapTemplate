@@ -1,12 +1,12 @@
 <template>
     <div>
-      <l-control class="custom-control">
+      <l-control class="custom-control-rigth">
         <div class="icon_div" @click="showPanelSettings">
           <b-icon icon="gear-fill"></b-icon>
         </div>
       </l-control>
 
-      <l-control class="custom-control" position="bottomleft">
+      <l-control class="custom-control-left" position="bottomleft">
         <div class="icon_div" @click="showPanelListMenu">
           <b-icon icon="text-center"></b-icon>
         </div>
@@ -57,7 +57,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
     .custom-control {
         display:block;
         color: currentColor;
@@ -92,6 +92,31 @@ export default {
       width: 100%;
       height: 100%;
       padding:5px 10px;
+    }
+    .custom-control-left {
+      position: absolute;
+      left: 0;
+      margin-left: 0px !important;
+      font-size: 16px;
+      color: white;
+      width: 40px;
+      background-color: rgba(47,64,80,0.9);
+      border-radius: 0px 20px 20px 0px;
+    }
+    .custom-control-rigth {
+      position: absolute;
+      left: 0;
+      margin-right: 0px !important;
+      font-size: 16px;
+      color: white;
+      width: 40px;
+      background-color: rgba(47,64,80,0.9);
+      border-radius: 20px 0px 0px 20px;
+    }
+    .leaflet-touch .leaflet-bar a {
+      background-color: rgba(47,64,80,0.9);
+      color: white;
+      border: 1px solid rgba(47,64,81,1)
     }
 
 </style>

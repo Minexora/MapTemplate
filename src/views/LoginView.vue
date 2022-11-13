@@ -5,11 +5,11 @@
                 <h2>Login</h2>
                 <form action="">
                     <div class="inputBx">
-                        <input type="text" v-model="loginData.username" placeholder="Username">
+                        <input type="text" v-model="loginData.Email" placeholder="Username">
                         <img src="@/assets/images/user.png">
                     </div>
                     <div class="inputBx">
-                        <input type="password" v-model="loginData.password" placeholder="Password">
+                        <input type="password" v-model="loginData.Password" placeholder="Password">
                         <img src="@/assets/images/lock.png">
                     </div>
                     <label class="remember"><input type="checkbox">Remember Me</label>
@@ -25,19 +25,37 @@
 </template>
 
 <script>
+import useJwt from '@/auth/jwt/useJwt'
+import { checkPerm } from '@/auth/utils'
 export default {
   name: 'LoginView',
   data () {
     return {
       loginData: {
-        username: '',
-        password: ''
+        Email: '',
+        Password: ''
       }
     }
   },
   methods: {
     sendLoginRequest () {
-      console.log(this.loginData)
+      useJwt.login(this.loginData).then((res) => {
+        useJwt.setToken(res.data.data.token)
+        useJwt.setUserData(JSON.stringify(res.data))
+
+        this.$store.commit('auth/set_token', res.data.data.token)
+        this.$store.commit('auth/set_username', res.data.data.username)
+        this.$store.commit('auth/set_userId', res.data.data.userId)
+        this.$store.commit('auth/set_userType', res.data.data.userType)
+
+        if (checkPerm('home_page')) {
+          setTimeout(() => {
+            this.$router.push({ name: 'home' }).catch((err) => {
+              console.log(err)
+            })
+          }, 1000)
+        }
+      })
     }
   }
 }

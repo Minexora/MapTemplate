@@ -4,6 +4,24 @@
   </div>
 </template>
 
+<script>
+import useJwt from '@/auth/jwt/useJwt'
+export default {
+  name: 'App',
+  created () {
+    const userData = useJwt.getUserData()
+    console.log(userData)
+    console.log(typeof userData)
+    if (userData) {
+      this.$store.commit('auth/set_token', userData.data.token)
+      this.$store.commit('auth/set_username', userData.data.username)
+      this.$store.commit('auth/set_userId', userData.data.userId)
+      this.$store.commit('auth/set_userType', userData.data.userType)
+    }
+  }
+}
+</script>
+
 <style lang="scss">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
