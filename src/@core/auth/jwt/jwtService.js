@@ -82,6 +82,10 @@ export default class JwtService {
     return localStorage.getItem(this.jwtConfig.storageTokenKeyName)
   }
 
+  getVehicles () {
+    return JSON.parse(localStorage.getItem(this.jwtConfig.storageVehicles))
+  }
+
   getRefreshToken () {
     return localStorage.getItem(this.jwtConfig.storageRefreshTokenKeyName)
   }
@@ -92,6 +96,10 @@ export default class JwtService {
 
   setToken (value) {
     localStorage.setItem(this.jwtConfig.storageTokenKeyName, value)
+  }
+
+  setVehicles (value) {
+    localStorage.setItem(this.jwtConfig.storageVehicles, value)
   }
 
   setRefreshToken (value) {

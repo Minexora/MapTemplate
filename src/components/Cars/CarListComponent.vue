@@ -1,6 +1,6 @@
 <template>
     <div class="col col-12">
-        <car-list-item v-for="car in cars" :key="car.id" :vehicle="car" @selectedCar="select_car"/>
+        <car-list-item v-for="car in cars" :key="car.imei" :vehicle="car" @selectedCar="select_car"/>
     </div>
 </template>
 
@@ -27,6 +27,8 @@ export default {
     getCarList () {
       useJwt.get(endpoints.getDevicesOnline2).then((res) => {
         this.cars = res?.data?.data
+        this.$store.commit('vehicle/set_showVehicles', res.data.data)
+        useJwt.setVehicles(JSON.stringify(res.data.data))
       })
     },
     select_car (car) {

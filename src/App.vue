@@ -10,6 +10,7 @@ export default {
   name: 'App',
   created () {
     const userData = useJwt.getUserData()
+    const showVehicles = useJwt.getVehicles()
     console.log(userData)
     console.log(typeof userData)
     if (userData) {
@@ -17,6 +18,7 @@ export default {
       this.$store.commit('auth/set_username', userData.data.username)
       this.$store.commit('auth/set_userId', userData.data.userId)
       this.$store.commit('auth/set_userType', userData.data.userType)
+      this.$store.commit('vehicle/set_showVehicles', showVehicles)
     }
   }
 }

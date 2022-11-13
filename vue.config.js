@@ -3,7 +3,7 @@ const path = require('path')
 
 module.exports = defineConfig({
   devServer: {
-    disableHostCheck: true,
+    // disableHostCheck: true,
     proxy: 'http://116.202.113.209:5322'
   },
   transpileDependencies: true,

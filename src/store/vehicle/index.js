@@ -14,19 +14,22 @@ export default {
       9: 'Boat',
       10: 'Katamaran'
     },
-    userId: '',
-    userType: '',
-    token: ''
+    show_vehicles: []
   },
   getters: {
     get_vehicleTypes (state) {
       return state.vehicleTypes
+    },
+    get_show_vehicles (state) {
+      return state.show_vehicles
     }
   },
   mutations: {
-  },
-  actions: {
-  },
-  modules: {
+    set_showVehicles (state, vehicles) {
+      state.show_vehicles = vehicles
+    },
+    remove_showVehicles (state, vehicle) {
+      state.show_vehicles = state.show_vehicles.filter(item => item.id !== vehicle.id)
+    }
   }
 }
