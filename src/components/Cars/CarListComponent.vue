@@ -75,6 +75,7 @@ export default {
       } else {
         this.cars = storedCars
       }
+      this.$store.commit('vehicle/set_showVehicles', [])
     },
     filter_vehicle (newVal) {
       const storedCars = this.$store.getters['vehicle/get_vehicle']
@@ -83,6 +84,7 @@ export default {
       } else {
         this.cars = storedCars
       }
+      this.$store.commit('vehicle/set_showVehicles', [])
     }
   },
   methods: {
