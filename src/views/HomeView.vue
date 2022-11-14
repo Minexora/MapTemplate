@@ -1,18 +1,21 @@
 <template>
   <div>
     <Map :center="map_center" :locations="map_locations" :showMap="showMap" :zoom="map_zoom" />
+    <b-sidebar />
   </div>
 </template>
 
 <script>
 import Map from '@/components/Map/Map.vue'
+import Sidebar from '@/components/Sidebar/SideComponent.vue'
 import { latLng } from 'leaflet'
 
 export default {
   name: 'HomeView',
   components: {
     // eslint-disable-next-line vue/no-unused-components
-    Map
+    Map,
+    'b-sidebar': Sidebar
   },
   data () {
     return {
@@ -38,13 +41,19 @@ export default {
       showMap: true
     }
   },
-  created () {
-    this.getVehicles()
+  computed: {
+    getShowVehicle () {
+      return this.$store.getters['vehicle/get_show_vehicles']
+    }
+  },
+  watch: {
+    getShowVehicle (newVal) {
+      this.getVehicles(newVal)
+    }
   },
   methods: {
-    getVehicles () {
-      const vehicles = this.$store.getters['vehicle/get_show_vehicles']
-      console.log('vehiclesho:', vehicles)
+    getVehicles (vehicles) {
+      this.map_locations = []
       for (const vehicle of vehicles) {
         const data = {
           id: 1,

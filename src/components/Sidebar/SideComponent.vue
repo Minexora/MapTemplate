@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
 
-  <b-sidebar ref="_sidebar" :visible="isShow" :right="position === 'right'" @change="changeSidebar" no-header shadow>
+  <b-sidebar ref="_sidebar" :visible="isShow" :right="position === 'right'" @change="changeSidebar" sidebar-class="custom-body" no-header shadow>
     <template #default="{ hide }">
         <div class="d-flex flex-row justify-content-center align-items-center font-weight-bold">
           <div class="col col-12 col-md-2 p-2">
@@ -10,9 +10,14 @@
           <h2 class="col col-12 col-md-10 m-0">{{title}}</h2>
         </div>
         <!-- TODO: Buraya menu componenti yazılacak! -->
-        <b-button @click="showModal">Open Modal</b-button>
-        <b-modals :isShow.sync="modal"  :size="'xl'" :title="'Deneme'" />
-        <car-list />
+
+        <car-list  class="mt-4" v-if="content === 1"/>
+
+        <div v-if="content === 2">
+          <b-button @click="showModal">Open Modal</b-button>
+          <b-modals :isShow.sync="modal"  :size="'xl'" :title="'Deneme'" />
+        </div>
+
       </template>
   </b-sidebar>
 </template>
@@ -32,30 +37,34 @@ export default {
   },
   data () {
     return {
-      modal: false
+      modal: false,
+      isShow: false,
+      title: '',
+      content: '',
+      position: ''
     }
   },
-  props: {
-    isShow: {
-      type: Boolean,
-      default: false
-    },
-    title: {
-      type: String,
-      required: true
-    },
-    content: {
-      type: String,
-      required: true
-    },
-    position: {
-      type: String,
-      required: true
+  computed: {
+    getSidebarData () {
+      return this.$store.getters['sidebar/get_sidebarData']
+    }
+  },
+  watch: {
+    getSidebarData (newData, oldData) {
+      this.isShow = newData.isShow
+      this.title = newData.title
+      this.content = newData.content
+      this.position = newData.position
     }
   },
   methods: {
     changeSidebar (newVal) {
-      this.$emit('update:isShow', newVal)
+      this.$store.commit('sidebar/set_sidebarData', {
+        isShow: newVal,
+        title: this.title,
+        content: this.content,
+        position: this.position
+      })
     },
     showModal () {
       this.modal = true
@@ -65,5 +74,13 @@ export default {
 </script>
 
 <style>
+  .b-sidebar-outer
+  .custom-body {
+      font-size: 16px;
+      color: white !important;
+      width: 420px !important;
+      width: 40px;
+      background-color: rgba(47,64,80,0.9) !important;
+    }
 
 </style>

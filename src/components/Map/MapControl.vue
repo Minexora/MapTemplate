@@ -12,22 +12,20 @@
         </div>
       </l-control>
 
-      <b-sidebar :isShow.sync="sidebar_data.show_side" :title="sidebar_data.title" :content="sidebar_data.content" :position="sidebar_data.position" />
     </div>
 </template>
 
 <script>
 import { LControl } from 'vue2-leaflet'
-import Sidebar from '@/components/Sidebar/SideComponent.vue'
 export default {
   name: 'MapControl',
   components: {
-    'l-control': LControl,
-    'b-sidebar': Sidebar
+    'l-control': LControl
   },
   data () {
     return {
       sidebar_data: {
+        isShow: false,
         title: '',
         position: '',
         show_side: false,
@@ -37,17 +35,21 @@ export default {
   },
   methods: {
     showPanelListMenu () {
-      this.sidebar_data.title = 'List Menu'
+      this.sidebar_data.title = 'Araç Listesi'
       this.sidebar_data.position = 'left'
       this.sidebar_data.show_side = true
-      // alert('showPanelListMenu Click!')
+      this.sidebar_data.isShow = true
+      this.sidebar_data.content = 1
+      this.$store.commit('sidebar/set_sidebarData', this.sidebar_data)
       // this.log()
     },
     showPanelSettings () {
       this.sidebar_data.title = 'Settings Menu'
       this.sidebar_data.position = 'right'
       this.sidebar_data.show_side = true
-      // alert('showPanelSettings Click!')
+      this.sidebar_data.isShow = true
+      this.sidebar_data.content = 2
+      this.$store.commit('sidebar/set_sidebarData', this.sidebar_data)
       // this.log()
     },
     log () {

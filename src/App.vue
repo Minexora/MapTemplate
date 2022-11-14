@@ -11,8 +11,6 @@ export default {
   created () {
     const userData = useJwt.getUserData()
     const showVehicles = useJwt.getVehicles()
-    console.log(userData)
-    console.log(typeof userData)
     if (userData) {
       this.$store.commit('auth/set_token', userData.data.token)
       this.$store.commit('auth/set_username', userData.data.username)

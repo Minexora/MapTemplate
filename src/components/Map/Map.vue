@@ -12,7 +12,7 @@
         :url="url"
         :attribution="attribution"
       />
-      <div v-for="location in locations" :key="location.id">
+      <div v-for="(location, index) in locations" :key="index">
         <l-marker :marker="location.marker" :popup="location.popup" :tooltip="location.tooltip" :popup_data="location.popup_data" :tooltip_data="location.tooltip_data" :iconColor="location.iconColor" />
       </div>
       <l-control />
@@ -65,7 +65,8 @@ export default {
       currentZoom: 11.5,
       currentCenter: this.center,
       mapOptions: {
-        zoomSnap: 0.5
+        zoomSnap: 0.5,
+        attributionControl: false
       }
     }
   },
