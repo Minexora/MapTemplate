@@ -80,7 +80,7 @@ export default {
     filter_vehicle (newVal) {
       const storedCars = this.$store.getters['vehicle/get_vehicle']
       if (newVal !== '') {
-        this.cars = storedCars.filter(item => item.phoneNumber === newVal || item.imei === newVal)
+        this.cars = storedCars.filter(item => item.phoneNumber.includes(newVal) || item.imei.includes(newVal))
       } else {
         this.cars = storedCars
       }
