@@ -6,19 +6,16 @@
                 <form action="">
                     <div class="inputBx">
                         <input type="text" v-model="loginData.Email" placeholder="Username">
-                        <img src="@/assets/images/user.png">
+                        <img src="@/assets/images/user-1.png">
                     </div>
                     <div class="inputBx">
                         <input type="password" v-model="loginData.Password" placeholder="Password">
                         <img src="@/assets/images/lock.png">
                     </div>
-                    <label class="remember"><input type="checkbox">Remember Me</label>
                     <div class="inputBx">
                         <input type="button" @click="sendLoginRequest" value="Login">
                     </div>
                 </form>
-                <p>Forgot <a href="#">Password</a></p>
-                <p>Need an <a href="#">Account</a></p>
             </div>
         </div>
     </section>
@@ -90,7 +87,7 @@ body {
             position: relative;
             padding: 50px;
             width: 360px;
-            height: 480px;
+            height: 400px;
             display: flex;
             justify-content: center;
             align-items: center;
