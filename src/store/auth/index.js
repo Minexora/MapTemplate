@@ -4,7 +4,10 @@ export default {
     username: '',
     userId: '',
     userType: '',
-    token: ''
+    token: '',
+    userTypeList: {
+      0: 'Admin'
+    }
   },
   getters: {
     get_username (state) {
@@ -18,6 +21,9 @@ export default {
     },
     get_token (state) {
       return state.token
+    },
+    get_userTypeList (state) {
+      return state.userTypeList
     }
   },
   mutations: {

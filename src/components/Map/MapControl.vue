@@ -99,9 +99,9 @@ export default {
       position: absolute;
       left: 0;
       margin-left: 0px !important;
-      font-size: 16px;
+      font-size: 21px;
       color: white;
-      width: 40px;
+      width: 49px;
       background-color: rgba(47,64,80,0.9);
       border-radius: 0px 20px 20px 0px;
     }
@@ -109,9 +109,9 @@ export default {
       position: absolute;
       left: 0;
       margin-right: 0px !important;
-      font-size: 16px;
+      font-size: 21px;
       color: white;
-      width: 40px;
+      width: 49px;
       background-color: rgba(47,64,80,0.9);
       border-radius: 20px 0px 0px 20px;
     }

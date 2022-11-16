@@ -41,7 +41,7 @@
                 <div class="col col-12 col-md-7 d-flex align-items-center justify-content-left">
                   <div class="row">
                     <div class="col col-12 col-md-12"><h4>{{userData.username}}</h4></div>
-                    <div class="col col-12 col-md-12"><small>{{userData.username}}</small></div>
+                    <div class="col col-12 col-md-12"><small>{{userData.userType}}</small></div>
                   </div>
                 </div>
                 <div class="col col-12 col-md-1 d-flex align-items-center justify-content-left">
@@ -92,7 +92,8 @@ export default {
       position: '',
       userData: {
         icon: require('@/assets/images/user.png'),
-        username: ''
+        username: '',
+        userType: ''
       }
     }
   },
@@ -125,7 +126,10 @@ export default {
       this.modal = true
     },
     getUserData () {
+      const allUserType = this.$store.getters['auth/get_userTypeList']
       this.userData.username = this.$store.getters['auth/get_username']
+      const userType = this.$store.getters['auth/get_userType']
+      this.userData.userType = allUserType[userType]
     },
     logout () {
       localStorage.clear()
