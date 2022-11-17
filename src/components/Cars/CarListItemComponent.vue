@@ -25,6 +25,10 @@ export default {
     vehicle: {
       type: Object,
       required: true
+    },
+    allSelect: {
+      type: Boolean,
+      default: false
     }
   },
   data () {
@@ -39,6 +43,9 @@ export default {
       } else {
         this.$emit('unselectedCar', this.vehicle)
       }
+    },
+    allSelect (newVal) {
+      this.selected = newVal
     }
   },
   computed: {
