@@ -47,9 +47,10 @@
                 <div class="col col-12 col-md-1 d-flex align-items-center justify-content-left">
                     <b-dropdown size="lg"  variant="link" toggle-class="text-decoration-none" no-caret>
                       <template #button-content>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" class="bi bi-gear" viewBox="0 0 16 16" @click="logout">
+                        <!-- <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" class="bi bi-gear" viewBox="0 0 16 16" @click="logout">
                           <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
-                        </svg>
+                        </svg> -->
+                        <b-icon  class="custom-control-exit" icon="lock-fill" @click="logout"></b-icon>
                       </template>
                       <!-- <b-dropdown-item href="#">Action</b-dropdown-item>
                       <b-dropdown-item href="#">Another action</b-dropdown-item>
@@ -232,4 +233,15 @@ export default {
      height: 30px;
 
   }
+
+  .custom-control-exit {
+
+      right: 20px;
+      margin-right: 0px;
+      font-size: 21px;
+      color: rgb(253, 111, 9);
+      width: 20px;
+      background-color: rgba(47,64,80,0.9);
+      border-radius: 20px 0px 0px 20px;
+    }
 </style>

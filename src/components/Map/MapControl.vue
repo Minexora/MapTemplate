@@ -1,6 +1,6 @@
 <template>
     <div>
-      <l-control class="custom-control-rigth">
+      <l-control class="custom-control-logout">
         <div class="icon_div" @click="showPanelExit">
           <b-icon icon="lock-fill"></b-icon>
         </div>
@@ -135,5 +135,17 @@ export default {
       background-color: rgba(47,64,80,0.9);
       color: white;
       border: 1px solid rgba(47,64,81,1)
+    }
+
+    .custom-control-logout{
+
+      position: absolute;
+      left: 0;
+      margin-right: 0px !important;
+      font-size: 21px;
+      color: rgb(255, 132, 0);
+      width: 49px;
+      background-color: rgba(47,64,80,0.9);
+      border-radius: 20px 0px 0px 20px;
     }
 </style>
