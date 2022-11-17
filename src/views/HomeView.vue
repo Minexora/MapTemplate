@@ -61,8 +61,9 @@ export default {
           popup: true,
           tooltip: false,
           popup_data: {
-            title: 'I am a popup',
-            content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sed pretium nisl, ut sagittis sapien. Sed vel sollicitudin nisi. Donec finibus semper metus id malesuada.'
+            title: vehicle.phoneNumber,
+            content: vehicle.imei
+
           },
           tooltip_data: {},
           iconColor: {

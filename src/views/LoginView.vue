@@ -2,14 +2,18 @@
     <section>
         <div class="box">
             <div class="form">
-                <h2>Login</h2>
+                <!-- <h3>Kullanıcı Girişi</h3> -->
+                <div id="divUserImage">
+                    <img src="@/assets/images/a_logo.png" style="width:220px;margin-bottom:70px;" />
+
+                </div>
                 <form action="">
                     <div class="inputBx">
-                        <input type="text" v-model="loginData.Email" placeholder="Username">
+                        <input type="text" v-model="loginData.Email" placeholder="User">
                         <img src="@/assets/images/user.png">
                     </div>
                     <div class="inputBx">
-                        <input type="password" v-model="loginData.Password" placeholder="Password">
+                        <input type="password" v-model="loginData.Password" placeholder="Pass">
                         <img src="@/assets/images/lock.png">
                     </div>
                     <label class="remember"><input type="checkbox">Remember Me</label>
@@ -17,8 +21,8 @@
                         <input type="button" @click="sendLoginRequest" value="Login">
                     </div>
                 </form>
-                <p>Forgot <a href="#">Password</a></p>
-                <p>Need an <a href="#">Account</a></p>
+                <!-- <p>Forgot <a href="#">Password</a></p>
+                <p>Need an <a href="#">Account</a></p> -->
             </div>
         </div>
     </section>
@@ -104,6 +108,12 @@ body {
 
                 h2 {
                     color: #fff;
+                    font-weight: 600;
+                    letter-spacing: 2px;
+                    margin-bottom: 30px;
+                }
+                h3 {
+                    color: rgb(252, 115, 3);
                     font-weight: 600;
                     letter-spacing: 2px;
                     margin-bottom: 30px;

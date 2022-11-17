@@ -12,7 +12,7 @@
                 id="input-1"
                 v-model="filter_vehicle"
                 type="text"
-                placeholder="Plaka Giriniz"
+                placeholder="Arama..."
               ></b-form-input>
             </b-form-group>
           </div>

@@ -5,7 +5,7 @@
     <template #default="{ hide }">
         <div class="d-flex flex-row justify-content-center align-items-center font-weight-bold">
           <div class="col col-12 col-md-2 p-2">
-            <b-button variant="outline-danger" block @click="hide">X</b-button>
+            <b-col lg="4" class="pb-2"><b-button pill variant="outline-warning" block @click="hide">X</b-button></b-col>
           </div>
           <h2 class="col col-12 col-md-10 m-0">{{title}}</h2>
         </div>
