@@ -1,6 +1,12 @@
 <template>
     <div>
       <l-control class="custom-control-rigth">
+        <div class="icon_div" @click="showPanelExit">
+          <b-icon icon="lock-fill"></b-icon>
+        </div>
+      </l-control>
+
+      <l-control class="custom-control-rigth">
         <div class="icon_div" @click="showPanelSettings">
           <b-icon icon="gear-fill"></b-icon>
         </div>
@@ -49,6 +55,16 @@ export default {
       this.sidebar_data.show_side = true
       this.sidebar_data.isShow = true
       this.sidebar_data.content = 2
+      this.$store.commit('sidebar/set_sidebarData', this.sidebar_data)
+      // this.log()
+    },
+
+    showPanelExit () {
+      this.sidebar_data.title = 'ÇIKIŞ'
+      this.sidebar_data.position = 'right'
+      this.sidebar_data.show_side = true
+      this.sidebar_data.isShow = true
+      this.sidebar_data.content = 3
       this.$store.commit('sidebar/set_sidebarData', this.sidebar_data)
       // this.log()
     },
@@ -120,5 +136,4 @@ export default {
       color: white;
       border: 1px solid rgba(47,64,81,1)
     }
-
 </style>

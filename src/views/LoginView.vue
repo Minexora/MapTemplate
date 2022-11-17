@@ -10,7 +10,7 @@
                 <form action="">
                     <div class="inputBx">
                         <input type="text" v-model="loginData.Email" placeholder="User">
-                        <img src="@/assets/images/user.png">
+                        <img src="@/assets/images/user-1.png">
                     </div>
                     <div class="inputBx">
                         <input type="password" v-model="loginData.Password" placeholder="Pass">
