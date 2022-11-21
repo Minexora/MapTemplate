@@ -97,7 +97,7 @@ export default {
       this.map_locations.push(data)
       clearInterval(this.intervals[vehicle.imei])
       delete this.intervals[vehicle.imei]
-      delete this.waypoints
+      // delete this.waypoints
     },
     playVehicleWayPointsShow (vehicle) {
       this.intervals[vehicle.imei] = setInterval(() => {
