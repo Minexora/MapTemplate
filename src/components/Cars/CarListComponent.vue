@@ -69,7 +69,8 @@ export default {
       storedCars: [],
       selected_vehicle_type: '',
       filter_vehicle: '',
-      all_selected: false
+      all_selected: false,
+      intervals: {}
     }
   },
   created () {
@@ -81,6 +82,9 @@ export default {
   computed: {
     select_vehicle_type_option () {
       return this.$store.getters['vehicle/get_vehicleTypes']
+    },
+    get_intervals () {
+      return this.$store.getters['vehicle/get_intervals']
     }
   },
   watch: {
@@ -105,6 +109,9 @@ export default {
         }
       }
       this.$store.commit('vehicle/set_showVehicles', [])
+    },
+    get_intervals (newVal) {
+      this.intervals = newVal
     }
   },
   methods: {
@@ -122,7 +129,14 @@ export default {
     },
     unselect_car (car) {
       this.selected_cars = this.selected_cars.filter(item => item.imei !== car.imei)
-      this.$store.commit('vehicle/remove_showVehicles', this.selected_cars)
+      this.$store.commit('vehicle/set_showVehicles', this.selected_cars.length < 1 ? [] : this.selected_cars)
+      this.intervalClear(car)
+    },
+    intervalClear (vehicle) {
+      clearInterval(this.intervals[vehicle.imei])
+      delete this.intervals[vehicle.imei]
+      this.$store.commit('vehicle/remove_way_points', vehicle.imei)
+      this.$store.commit('vehicle/set_intervals', this.intervals)
     }
   }
 }

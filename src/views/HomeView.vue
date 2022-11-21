@@ -104,8 +104,8 @@ export default {
       clearInterval(this.intervals[vehicle.imei])
       delete this.intervals[vehicle.imei]
       this.$store.commit('vehicle/remove_way_points', vehicle.imei)
+      this.$store.commit('vehicle/set_intervals', this.intervals)
     },
-
     playVehicleWayPointsShow (vehicle) {
       if (!(vehicle.imei in this.intervals)) {
         this.intervals[vehicle.imei] = setInterval(() => {
@@ -134,6 +134,7 @@ export default {
             this.$store.commit('vehicle/set_way_points', tmpwaypoints)
           })
         }, 3000)
+        this.$store.commit('vehicle/set_intervals', this.intervals)
       }
     }
   }

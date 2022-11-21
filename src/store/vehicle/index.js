@@ -32,7 +32,8 @@ export default {
     },
     show_vehicles: [],
     waypoints: [],
-    vehicles: []
+    vehicles: [],
+    intervals: []
   },
   getters: {
     get_vehicleTypes (state) {
@@ -52,6 +53,9 @@ export default {
     },
     get_show_vehicles (state) {
       return state.show_vehicles
+    },
+    get_intervals (state) {
+      return state.intervals
     }
   },
   mutations: {
@@ -64,6 +68,9 @@ export default {
     set_showVehicles (state, vehicles) {
       state.show_vehicles = vehicles
     },
+    set_intervals (state, intervals) {
+      state.intervals = intervals
+    },
     set_last_location (state, _vehicle) {
       const vehicle = state.show_vehicles.find(item => item.imei === _vehicle.imei)
       state.show_vehicles = state.show_vehicles.filter(item => item.imei !== _vehicle.imei)
@@ -73,11 +80,8 @@ export default {
       }
       state.show_vehicles.push(vehicle)
     },
-    remove_showVehicles (state, vehicles) {
-      state.show_vehicles = vehicles
-    },
     remove_way_points (state, imei) {
-      delete state.waypoints[imei]
+      state.waypoints = state.waypoints.filter(item => item.imei !== imei)
     }
   }
 }

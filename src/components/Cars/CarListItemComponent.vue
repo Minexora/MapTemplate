@@ -50,6 +50,8 @@ export default {
       if (newVal) {
         this.$emit('selectedCar', this.tmpVehicle)
       } else {
+        this.tmpVehicle.isPlay = false
+        this.setIcon()
         this.$emit('unselectedCar', this.tmpVehicle)
       }
     },
@@ -65,16 +67,15 @@ export default {
     getIcons () {
       const icons = this.$store.getters['vehicle/get_vehicleTypesIcon']
       return icons[this.tmpVehicle.type]
-    },
-    getPlayİcon () {
-      console.log('COmputed:', this.tmpVehicle.isPlay)
-      return this.tmpVehicle.isPlay ? this.stop_icon : this.start_icon
     }
   },
   methods: {
     playBtnFunction () {
       this.tmpVehicle.isPlay = !this.tmpVehicle.isPlay
-      console.log('this.tmpVehicle.isPlay: ', this.tmpVehicle.isPlay)
+      this.$emit('selectedCar', this.tmpVehicle)
+      this.setIcon()
+    },
+    setIcon () {
       if (this.tmpVehicle.isPlay) {
         this.play_icon = this.stop_icon
         this.play_desc = 'Stop'
@@ -82,7 +83,6 @@ export default {
         this.play_icon = this.start_icon
         this.play_desc = 'Play'
       }
-      this.$emit('selectedCar', this.tmpVehicle)
     }
   }
 }
