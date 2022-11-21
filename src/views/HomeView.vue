@@ -117,7 +117,7 @@ export default {
           tmpwaypoints.push(tmpvehicle)
           this.$store.commit('vehicle/set_way_points', tmpwaypoints)
         })
-      }, 2000)
+      }, 3000)
     }
   }
 }
