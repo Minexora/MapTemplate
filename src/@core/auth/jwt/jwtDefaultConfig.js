@@ -4,6 +4,7 @@ export default {
   refreshEndpoint: '/jwt/refresh-token',
   logoutEndpoint: '/jwt/logout',
   getDevicesOnline2: '/Tracker/GetDevicesOnline2',
+  GetDeviceDataForLastTenMinutes: '/Tracker/GetDeviceDataForLastTenMinutes',
 
   // This will be prefixed in authorization header with token
   // e.g. Authorization: Bearer <token>

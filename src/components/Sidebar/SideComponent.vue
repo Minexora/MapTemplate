@@ -67,7 +67,7 @@
                 </div>
               </div>
             </div>
-          </template>
+      </template>
   </b-sidebar>
 </template>
 

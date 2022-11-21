@@ -8,10 +8,14 @@
     <div class="col col-11 col-md-11 m-0 border-left">
       <div class="row">
         <div class="col col-12 col-md-2 d-flex align-items-center justify-content-center">
-          <img :id='vehicle.imei' :src='getIcons' class="img-fluid rounded-start col col-4 col-md-12">
-          <b-tooltip :target="vehicle.imei">{{getStatus}}</b-tooltip>
+          <img :id='tmpVehicle.imei' :src='getIcons' class="img-fluid rounded-start col col-4 col-md-12">
+          <b-tooltip :target="tmpVehicle.imei">{{getStatus}}</b-tooltip>
         </div>
-        <div class="col col-12 col-md-7 d-flex align-items-center justify-content-center">{{vehicle.phoneNumber}}</div>
+        <div class="col col-12 col-md-7 d-flex align-items-center justify-content-center">{{tmpVehicle.phoneNumber}}</div>
+        <div v-if="selected" class="col col-12 col-md-2 d-flex align-items-center justify-content-center" @click="playBtnFunction">
+          <img :id='tmpVehicle.imei + "_play"' :src='play_icon' class="img-fluid rounded-start col col-1 col-md-8">
+          <b-tooltip :target="tmpVehicle.imei + '_play'">{{play_desc}}</b-tooltip>
+        </div>
         <!-- <div class="col col-12 col-md-2 d-flex align-items-center justify-content-center">{{getStatus}}</div> -->
       </div>
     </div>
@@ -33,15 +37,20 @@ export default {
   },
   data () {
     return {
-      selected: false
+      selected: false,
+      tmpVehicle: this.vehicle,
+      start_icon: require('@/assets/images/play-button.png'),
+      stop_icon: require('@/assets/images/stop-button.png'),
+      play_icon: require('@/assets/images/play-button.png'),
+      play_desc: 'Play'
     }
   },
   watch: {
     selected (newVal) {
       if (newVal) {
-        this.$emit('selectedCar', this.vehicle)
+        this.$emit('selectedCar', this.tmpVehicle)
       } else {
-        this.$emit('unselectedCar', this.vehicle)
+        this.$emit('unselectedCar', this.tmpVehicle)
       }
     },
     allSelect (newVal) {
@@ -51,11 +60,29 @@ export default {
   computed: {
     getStatus () {
       const types = this.$store.getters['vehicle/get_vehicleTypes']
-      return types[this.vehicle.type]
+      return types[this.tmpVehicle.type]
     },
     getIcons () {
       const icons = this.$store.getters['vehicle/get_vehicleTypesIcon']
-      return icons[this.vehicle.type]
+      return icons[this.tmpVehicle.type]
+    },
+    getPlayİcon () {
+      console.log('COmputed:', this.tmpVehicle.isPlay)
+      return this.tmpVehicle.isPlay ? this.stop_icon : this.start_icon
+    }
+  },
+  methods: {
+    playBtnFunction () {
+      this.tmpVehicle.isPlay = !this.tmpVehicle.isPlay
+      console.log('this.tmpVehicle.isPlay: ', this.tmpVehicle.isPlay)
+      if (this.tmpVehicle.isPlay) {
+        this.play_icon = this.stop_icon
+        this.play_desc = 'Stop'
+      } else {
+        this.play_icon = this.start_icon
+        this.play_desc = 'Play'
+      }
+      this.$emit('selectedCar', this.tmpVehicle)
     }
   }
 }

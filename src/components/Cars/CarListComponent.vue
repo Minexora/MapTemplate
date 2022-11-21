@@ -111,10 +111,12 @@ export default {
     getCarList () {
       useJwt.get(endpoints.getDevicesOnline2).then((res) => {
         this.cars = res?.data?.data || []
-        this.$store.commit('vehicle/set_vehicles', res.data.data)
+        this.cars.map(item => ({ ...item, isPlay: 0 }))
+        this.$store.commit('vehicle/set_vehicles', this.cars)
       })
     },
     select_car (car) {
+      if (this.selected_cars.find(item => item.imei === car.imei)) { this.selected_cars = this.selected_cars.filter(item => item.imei !== car.imei) }
       this.selected_cars.push(car)
       this.$store.commit('vehicle/set_showVehicles', this.selected_cars)
     },
@@ -136,7 +138,7 @@ export default {
   padding: 5px;
 }
 .car-list {
-  height: 77vh;
+  height: 84vh;
   overflow-y:scroll;
 }
 .car-list::-webkit-scrollbar {

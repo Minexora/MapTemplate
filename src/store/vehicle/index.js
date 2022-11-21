@@ -29,6 +29,7 @@ export default {
       10: require('../../assets/images/catamaran-white.png')
     },
     show_vehicles: [],
+    waypoints: [],
     vehicles: []
   },
   getters: {
@@ -41,6 +42,12 @@ export default {
     get_vehicle (state) {
       return state.vehicles
     },
+    get_waypoints (state) {
+      return state.waypoints
+    },
+    get_show_and_play (state) {
+      return state.show_vehicles
+    },
     get_show_vehicles (state) {
       return state.show_vehicles
     }
@@ -49,11 +56,17 @@ export default {
     set_vehicles (state, vehicles) {
       state.vehicles = vehicles
     },
+    set_way_points (state, waypoints) {
+      state.waypoints = waypoints
+    },
     set_showVehicles (state, vehicles) {
       state.show_vehicles = vehicles
     },
     remove_showVehicles (state, vehicles) {
       state.show_vehicles = vehicles
+    },
+    remove_way_points (state, imei) {
+      delete state.waypoints[imei]
     }
   }
 }
