@@ -127,6 +127,7 @@ export default {
   }
 }
 </script>
+
 <style lang="scss">
 .car-list-filter-form {
   border-top: 0px;
@@ -138,7 +139,7 @@ export default {
   padding: 5px;
 }
 .car-list {
-  height: 84vh;
+  height: 78vh;
   overflow-y:scroll;
 }
 .car-list::-webkit-scrollbar {

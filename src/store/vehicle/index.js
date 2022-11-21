@@ -13,6 +13,7 @@ export default {
       8: 'Minibüs',
       9: 'Boat',
       10: 'Katamaran',
+      11: 'Saat',
       1000: 'Hepsi'
     },
     vehicleTypesIcon: {
@@ -26,7 +27,8 @@ export default {
       7: require('../../assets/images/school-bus-white.png'),
       8: require('../../assets/images/minibus-white.png'),
       9: require('../../assets/images/boat-white.png'),
-      10: require('../../assets/images/catamaran-white.png')
+      10: require('../../assets/images/catamaran-white.png'),
+      11: require('../../assets/images/wristwatch.png')
     },
     show_vehicles: [],
     waypoints: [],
@@ -61,6 +63,15 @@ export default {
     },
     set_showVehicles (state, vehicles) {
       state.show_vehicles = vehicles
+    },
+    set_last_location (state, _vehicle) {
+      const vehicle = state.show_vehicles.find(item => item.imei === _vehicle.imei)
+      state.show_vehicles = state.show_vehicles.filter(item => item.imei !== _vehicle.imei)
+      if (vehicle) {
+        vehicle.lat = _vehicle.location.lat
+        vehicle.lng = _vehicle.location.lng
+      }
+      state.show_vehicles.push(vehicle)
     },
     remove_showVehicles (state, vehicles) {
       state.show_vehicles = vehicles

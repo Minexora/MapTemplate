@@ -71,15 +71,19 @@ export default {
     },
     getWayPoints (newVal) {
       this.waypoints = newVal
-      console.log('this.waypoints:', this.waypoints)
     }
   },
   methods: {
     getVehicles (vehicles) {
       this.map_locations = []
       for (const vehicle of vehicles) {
-        if (vehicle.isPlay) this.playVehicleWayPointsShow(vehicle)
-        else this.defaultVehicleShow(vehicle)
+        if (vehicle.isPlay) {
+          this.playVehicleWayPointsShow(vehicle)
+          this.defaultVehicleShow(vehicle)
+        } else {
+          this.defaultVehicleShow(vehicle)
+          this.intervalClear(vehicle)
+        }
       }
     },
     defaultVehicleShow (vehicle) {
@@ -95,29 +99,42 @@ export default {
       }
       const data = Object.assign({}, this.default_popup_vehicle)
       this.map_locations.push(data)
+    },
+    intervalClear (vehicle) {
       clearInterval(this.intervals[vehicle.imei])
       delete this.intervals[vehicle.imei]
-      // delete this.waypoints
+      this.$store.commit('vehicle/remove_way_points', vehicle.imei)
     },
+
     playVehicleWayPointsShow (vehicle) {
-      this.intervals[vehicle.imei] = setInterval(() => {
-        useJwt.post(endpoints.GetDeviceDataForLastTenMinutes, { Id: vehicle.id }).then((res) => {
+      if (!(vehicle.imei in this.intervals)) {
+        this.intervals[vehicle.imei] = setInterval(() => {
+          useJwt.post(endpoints.GetDeviceDataForLastTenMinutes, { Id: vehicle.id }).then((res) => {
           // eslint-disable-next-line prefer-const
-          let tmpwaypoints = this.$store.getters['vehicle/get_waypoints']
-          // eslint-disable-next-line prefer-const
-          let tmpvehicle = tmpwaypoints.find(item => item.imei === vehicle.imei)
-          tmpwaypoints = tmpwaypoints.filter(item => item.imei !== vehicle.imei)
-          if (!tmpvehicle) tmpvehicle = { imei: vehicle.imei, color: res?.data?.data?.markerColors, points: [] }
-          res?.data?.data?.coordinates.forEach(item => {
-            const tmppoint = [item.lat, item.lng]
-            if (!tmpvehicle.points.find(item => item === tmppoint)) {
-              tmpvehicle.points.push(tmppoint)
-            }
+            let tmpwaypoints = this.$store.getters['vehicle/get_waypoints']
+            // eslint-disable-next-line prefer-const
+            let tmpvehicle = tmpwaypoints.find(item => item.imei === vehicle.imei)
+            tmpwaypoints = tmpwaypoints.filter(item => item.imei !== vehicle.imei)
+            if (!tmpvehicle) tmpvehicle = { imei: vehicle.imei, color: res?.data?.data?.markerColors, points: [] }
+            res?.data?.data?.coordinates.forEach(item => {
+              const tmppoint = [item.lat, item.lng]
+              if (!tmpvehicle.points.find(item => item[0] === tmppoint[0] && item[1] === tmppoint[1])) {
+                tmpvehicle.points.push(tmppoint)
+              }
+              const vehicleLastLocation = {
+                location: {
+                  lat: tmppoint[0],
+                  lng: tmppoint[1]
+                },
+                imei: vehicle.imei
+              }
+              this.$store.commit('vehicle/set_last_location', vehicleLastLocation)
+            })
+            tmpwaypoints.push(tmpvehicle)
+            this.$store.commit('vehicle/set_way_points', tmpwaypoints)
           })
-          tmpwaypoints.push(tmpvehicle)
-          this.$store.commit('vehicle/set_way_points', tmpwaypoints)
-        })
-      }, 3000)
+        }, 3000)
+      }
     }
   }
 }
