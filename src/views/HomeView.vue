@@ -106,7 +106,8 @@ export default {
       this.default_popup_vehicle.iconColor = {
         color: vehicle.markerColors,
         circleColor: 'black',
-        strokeColor: 'white'
+        strokeColor: 'white',
+        markerIcon: this.getIcons(vehicle)
       }
       const data = Object.assign({}, this.default_popup_vehicle)
       return data
@@ -154,6 +155,10 @@ export default {
         }, 3000)
         this.$store.commit('vehicle/set_intervals', this.intervals)
       }
+    },
+    getIcons (vehicle) {
+      const icons = this.$store.getters['vehicle/get_vehicleTypesIcon']
+      return icons[vehicle.type]
     }
   }
 }

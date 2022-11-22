@@ -1,5 +1,5 @@
 <template>
-    <l-marker :lat-lng="marker" :icon="yellow_icon"  >
+    <l-marker :lat-lng="marker" :icon="iconMarker"  >
         <l-popup v-if="popup" @innerClick="innerClick" :data="popup_data" />
         <l-tooltip v-if="tooltip"  @innerClick="innerClick" :data="tooltip_data" />
     </l-marker>
@@ -10,7 +10,7 @@ import L from 'leaflet'
 import { LMarker } from 'vue2-leaflet'
 import MapTooltip from '@/components/Map/MapTooltip.vue'
 import MapPopup from '@/components/Map/MapPopup.vue'
-
+import 'leaflet-extra-markers'
 export default {
   name: 'MapMarker',
   components: {
@@ -67,6 +67,15 @@ export default {
         glyphSize: '11px'
       })
     },
+    iconMarker () {
+      // eslint-disable-next-line new-cap
+      return new L.ExtraMarkers.icon({
+        innerHTML: '<img src="' + this.iconColor.markerIcon + '"  class="markerIcon">',
+        markerColor: this.iconColor.color,
+        shape: 'square',
+        svg: true
+      })
+    },
     yellow_icon () {
       return L.divIcon({
         className: 'my-custom-pin',
@@ -92,5 +101,9 @@ export default {
 <style>
 .color_yellow {
   color: blueviolet;
+}
+.markerIcon {
+  width: 23px !important;
+  margin-top: 7px !important;
 }
 </style>
