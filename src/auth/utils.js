@@ -5,6 +5,13 @@ export const isUserLoggedIn = () => {
   return localStorage.getItem('userData') || localStorage.getItem(useJwt.jwtConfig.storageTokenKeyName)
 }
 
+export const checkToken = () => {
+  // eslint-disable-next-line no-async-promise-executor
+  return new Promise(async (resolve, reject) => {
+    await useJwt.get(useJwt.jwtConfig.checkTokenEndpoint).then(res => resolve(res.data)).catch(err => reject(err))
+  })
+}
+
 export const getUserData = () => JSON.parse(localStorage.getItem('u'))
 
 export const checkPerm = (perms) => {

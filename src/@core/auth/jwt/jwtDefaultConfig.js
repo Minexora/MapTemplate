@@ -3,6 +3,7 @@ export default {
   loginEndpoint: '/user/login',
   refreshEndpoint: '/jwt/refresh-token',
   logoutEndpoint: '/jwt/logout',
+  checkTokenEndpoint: '',
   getDevicesOnline2: '/Tracker/GetDevicesOnline2',
   GetDeviceDataForLastTenMinutes: '/Tracker/GetDeviceDataForLastTenMinutes',
 

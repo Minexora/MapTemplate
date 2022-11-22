@@ -40,6 +40,7 @@ export default {
       },
       default_popup_vehicle: {
         id: 1,
+        imei: '',
         marker: '',
         popup: true,
         tooltip: false,
@@ -74,8 +75,17 @@ export default {
     }
   },
   methods: {
+    getDiffVehicle (l1, l2) {
+      return l1.filter(item => !l2.find(i => i.imei === item.imei))
+    },
     getVehicles (vehicles) {
-      this.map_locations = []
+      if (vehicles.length < 1) this.map_locations = []
+      else {
+        const diffItems = this.getDiffVehicle(this.map_locations, vehicles)
+        diffItems.forEach(item => {
+          this.map_locations = this.map_locations.filter(i => i !== item)
+        })
+      }
       for (const vehicle of vehicles) {
         if (vehicle.isPlay) {
           this.playVehicleWayPointsShow(vehicle)
@@ -86,8 +96,9 @@ export default {
         }
       }
     },
-    defaultVehicleShow (vehicle) {
+    firstValueVehicle (vehicle) {
       this.default_popup_vehicle.marker = latLng(vehicle.lat, vehicle.lng)
+      this.default_popup_vehicle.imei = vehicle.imei
       this.default_popup_vehicle.popup_data = {
         title: vehicle.phoneNumber,
         content: vehicle.imei
@@ -98,7 +109,14 @@ export default {
         strokeColor: 'white'
       }
       const data = Object.assign({}, this.default_popup_vehicle)
-      this.map_locations.push(data)
+      return data
+    },
+    defaultVehicleShow (vehicle) {
+      const _vehicle = this.map_locations.find(item => item.imei === vehicle.imei)
+      if (!_vehicle) { this.map_locations.push(this.firstValueVehicle(vehicle)) } else {
+        this.map_locations = this.map_locations.map(item => ({ ...item, marker: item.imei === vehicle.imei ? latLng(vehicle.lat, vehicle.lng) : item.marker }))
+      }
+      console.log('this.map_locations: ', this.map_locations)
     },
     intervalClear (vehicle) {
       clearInterval(this.intervals[vehicle.imei])
