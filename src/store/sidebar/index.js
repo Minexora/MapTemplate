@@ -5,6 +5,7 @@ export default {
     title: '',
     content: 1,
     position: 'left'
+
   },
   getters: {
     get_sidebarData (state) {

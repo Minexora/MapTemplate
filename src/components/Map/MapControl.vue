@@ -120,6 +120,7 @@ export default {
       width: 49px;
       background-color: rgba(47,64,80,0.9);
       border-radius: 0px 20px 20px 0px;
+
     }
     .custom-control-rigth {
       position: absolute;
@@ -130,6 +131,7 @@ export default {
       width: 49px;
       background-color: rgba(47,64,80,0.9);
       border-radius: 20px 0px 0px 20px;
+
     }
     .leaflet-touch .leaflet-bar a {
       background-color: rgba(47,64,80,0.9);

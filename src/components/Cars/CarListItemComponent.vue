@@ -14,7 +14,7 @@
         <div class="col col-12 col-md-7 d-flex align-items-center justify-content-center">{{tmpVehicle.phoneNumber}}</div>
         <div v-if="selected" class="col col-12 col-md-2 d-flex align-items-center justify-content-center" @click="playBtnFunction">
           <img :id='tmpVehicle.imei + "_play"' :src='play_icon' class="img-fluid rounded-start col col-1 col-md-8">
-          <b-tooltip :target="tmpVehicle.imei + '_play'">{{play_desc}}</b-tooltip>
+          <!-- <b-tooltip :target="tmpVehicle.imei + '_play'">{{play_desc}}</b-tooltip> -->
         </div>
         <!-- <div class="col col-12 col-md-2 d-flex align-items-center justify-content-center">{{getStatus}}</div> -->
       </div>

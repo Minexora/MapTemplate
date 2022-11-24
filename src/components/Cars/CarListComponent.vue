@@ -170,4 +170,5 @@ export default {
   height: 40px;
   padding: 0.375rem 0.75rem;
 }
+
 </style>
