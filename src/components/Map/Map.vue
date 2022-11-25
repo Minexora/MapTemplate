@@ -18,7 +18,7 @@
         </l-marker>
       </div>
       <div v-for="(item, index) in waypoints" :key="index+ '_point'">
-        <l-polyline :lat-lngs="item.points" :color="item.color" :weight=7 :fill="true" :fillColor="item.color" :fillOpacity="0.3" ></l-polyline>
+        <l-polyline :lat-lngs="item.points" :color="item.color" :weight=5 :fill="false" :fillColor="item.color" :fillOpacity="0.3" ></l-polyline>
        <!--  <l-routing-machine :waypoints="waypoints"/> -->
       </div >
       <l-control />

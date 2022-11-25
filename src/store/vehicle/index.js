@@ -30,6 +30,21 @@ export default {
       10: require('../../assets/images/catamaran-white.png'),
       11: require('../../assets/images/wristwatch.png')
     },
+
+    vehicleTypesIconBlc: {
+      0: require('../../assets/images/sedan.png'),
+      1: require('../../assets/images/pickup-truck-black.png'),
+      2: require('../../assets/images/camper-van.png'),
+      3: require('../../assets/images/truck.png'),
+      4: require('../../assets/images/safari.png'),
+      5: require('../../assets/images/motorbike.png'),
+      6: require('../../assets/images/minivan.png'),
+      7: require('../../assets/images/school-bus.png'),
+      8: require('../../assets/images/minibus.png'),
+      9: require('../../assets/images/boat.png'),
+      10: require('../../assets/images/catamaran.png'),
+      11: require('../../assets/images/wristwatch.png')
+    },
     show_vehicles: [],
     waypoints: [],
     vehicles: [],
@@ -41,6 +56,9 @@ export default {
     },
     get_vehicleTypesIcon (state) {
       return state.vehicleTypesIcon
+    },
+    get_vehicleTypesIconBlc (state) {
+      return state.vehicleTypesIconBlc
     },
     get_vehicle (state) {
       return state.vehicles

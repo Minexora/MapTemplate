@@ -107,7 +107,8 @@ export default {
         color: vehicle.markerColors,
         circleColor: 'black',
         strokeColor: 'white',
-        markerIcon: this.getIcons(vehicle)
+        markerIcon: this.getIcons(vehicle),
+        markerIconBlc: this.getIconsBlc(vehicle)
       }
       const data = Object.assign({}, this.default_popup_vehicle)
       return data
@@ -158,6 +159,10 @@ export default {
     },
     getIcons (vehicle) {
       const icons = this.$store.getters['vehicle/get_vehicleTypesIcon']
+      return icons[vehicle.type]
+    },
+    getIconsBlc (vehicle) {
+      const icons = this.$store.getters['vehicle/get_vehicleTypesIconBlc']
       return icons[vehicle.type]
     }
   }
