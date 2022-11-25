@@ -1,9 +1,9 @@
 <template>
     <l-popup v-if="data">
         <div @click="$emit('innerClick')">
-            {{data.title}}
+            Araç : {{data.title}}
             <p>
-                {{data.content}}
+                Imei : {{data.content}}
             </p>
         </div>
     </l-popup>
