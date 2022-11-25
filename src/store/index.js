@@ -3,8 +3,9 @@ import Vuex from 'vuex'
 import auth from './auth'
 import vehicle from './vehicle'
 import sidebar from './sidebar'
-import createPersistedState from 'vuex-persistedstate'
-import Cookies from 'js-cookie'
+// import createPersistedState from 'vuex-persistedstate'
+// import SecureLS from 'secure-ls'
+// const ls = new SecureLS({ isCompression: false })
 
 Vue.use(Vuex)
 
@@ -15,10 +16,9 @@ export default new Vuex.Store({
     sidebar
   },
   plugins: [
-    createPersistedState({
-      getState: (key) => Cookies.get(key),
-      setState: (key, state) => Cookies.set(key, state, { expires: 3, secure: true })
-    })
+    // createPersistedState({
+    //   storage: window.sessionStorage
+    // })
   ],
   strict: process.env.DEV
 })

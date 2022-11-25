@@ -42,6 +42,7 @@ export default {
         id: 1,
         imei: '',
         marker: '',
+        rotation: '',
         popup: true,
         tooltip: false,
         popup_data: {},
@@ -99,9 +100,15 @@ export default {
     firstValueVehicle (vehicle) {
       this.default_popup_vehicle.marker = latLng(vehicle.lat, vehicle.lng)
       this.default_popup_vehicle.imei = vehicle.imei
+      this.default_popup_vehicle.rotation = vehicle.coordinates[0].rotation
       this.default_popup_vehicle.popup_data = {
         title: vehicle.phoneNumber,
-        content: vehicle.imei
+        imei: vehicle.imei,
+        speed: vehicle.speed,
+        ignition: vehicle.batteryPercent, // 0 ise kontak açık 1 ise kontak kapalı
+        distance: vehicle.distance,
+        insidePolygon: vehicle.insidePolygon,
+        type: this.getTypeText(vehicle)
       }
       this.default_popup_vehicle.iconColor = {
         color: vehicle.markerColors,
@@ -116,9 +123,19 @@ export default {
     defaultVehicleShow (vehicle) {
       const _vehicle = this.map_locations.find(item => item.imei === vehicle.imei)
       if (!_vehicle) { this.map_locations.push(this.firstValueVehicle(vehicle)) } else {
-        this.map_locations = this.map_locations.map(item => ({ ...item, marker: item.imei === vehicle.imei ? latLng(vehicle.lat, vehicle.lng) : item.marker }))
+        this.map_locations = this.map_locations.map(item => ({
+          ...item,
+          marker: item.imei === vehicle.imei ? latLng(vehicle.lat, vehicle.lng) : item.marker,
+          popup_data: {
+            ...item.popup_data,
+            speed: item.imei === vehicle.imei ? vehicle.speed : item.popup_data.speed,
+            distance: item.imei === vehicle.imei ? vehicle.distance : item.popup_data.distance,
+            ignition: item.imei === vehicle.imei ? vehicle.batteryPercent : item.popup_data.ignition,
+            insidePolygon: item.imei === vehicle.imei ? vehicle.coordinates[0].insidePolygon : item.popup_data.insidePolygon
+          }
+        })
+        )
       }
-      console.log('this.map_locations: ', this.map_locations)
     },
     intervalClear (vehicle) {
       clearInterval(this.intervals[vehicle.imei])
@@ -146,7 +163,11 @@ export default {
                   lat: tmppoint[0],
                   lng: tmppoint[1]
                 },
-                imei: vehicle.imei
+                rotation: item.rotation,
+                speed: item.speed,
+                distance: item.distance,
+                imei: vehicle.imei,
+                insidePolygon: item.insidePolygon
               }
               this.$store.commit('vehicle/set_last_location', vehicleLastLocation)
             })
@@ -160,6 +181,10 @@ export default {
     getIcons (vehicle) {
       const icons = this.$store.getters['vehicle/get_vehicleTypesIcon']
       return icons[vehicle.type]
+    },
+    getTypeText (vehicle) {
+      const types = this.$store.getters['vehicle/get_vehicleTypes']
+      return types[vehicle.type]
     },
     getIconsBlc (vehicle) {
       const icons = this.$store.getters['vehicle/get_vehicleTypesIconBlc']

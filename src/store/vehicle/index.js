@@ -95,6 +95,10 @@ export default {
       if (vehicle) {
         vehicle.lat = _vehicle.location.lat
         vehicle.lng = _vehicle.location.lng
+        vehicle.rotation = _vehicle.rotation
+        vehicle.speed = _vehicle.speed
+        vehicle.distance = _vehicle.distance
+        vehicle.coordinates[0].insidePolygon = _vehicle.insidePolygon
       }
       state.show_vehicles.push(vehicle)
     },
