@@ -110,71 +110,36 @@ export default {
       type: Object
     }
   },
+  created () {
+    this.$crontab.addJob({
+      name: 'counter',
+      interval: {
+        seconds: '/5'
+      },
+      job: this.checkVehicleTimes
+    })
+  },
   computed: {
-    getPoligonOutsideTime () {
-      const vehicleTimes = localStorage.getItem(jwtDefaultConfig.vehicleTimes)
-      let totalTime = 0
-      if (vehicleTimes && vehicleTimes[this.data.imei]) {
-        const poligonTimes = vehicleTimes[this.data.imei].poligon_outside_times
-        for (const time of poligonTimes) {
-          const endTime = time.end ? time.end : Date.now()
-          totalTime += this.millisToMinutesAndSeconds(endTime - time.start)
-        }
-      }
-      return totalTime
-    },
-    getIdleTime () {
-      const vehicleTimes = localStorage.getItem(jwtDefaultConfig.vehicleTimes)
-      let totalTime = 0
-      if (vehicleTimes && vehicleTimes[this.data.imei]) {
-        const idleTimes = vehicleTimes[this.data.imei].idle_times
-        for (const time of idleTimes) {
-          const endTime = time.end ? time.end : Date.now()
-          totalTime += this.millisToMinutesAndSeconds(endTime - time.start)
-        }
-      }
-      return totalTime
-    },
-    getStopTime () {
-      const vehicleTimes = localStorage.getItem(jwtDefaultConfig.vehicleTimes)
-      let totalTime = 0
-      if (vehicleTimes && vehicleTimes[this.data.imei]) {
-        const stopTimes = vehicleTimes[this.data.imei].stop_times
-        for (const time of stopTimes) {
-          const endTime = time.end ? time.end : Date.now()
-          totalTime += this.millisToMinutesAndSeconds(endTime - time.start)
-        }
-      }
-      return totalTime
-    }
+
   },
   watch: {
     data (newVal, oldVal) {
-      if ((newVal.insidePolygon !== oldVal.insidePolygon && newVal.insidePolygon) || this.times.poligon_outside_time) {
+      if (typeof newVal.insidePolygon !== 'undefined' && !newVal.insidePolygon) {
         this.poligon_outside_time(newVal.imei, !newVal.insidePolygon)
       }
-      if (newVal.ignition !== oldVal.ignition || this.times.idle_stop_time) {
-        if (!newVal.ignition) {
-          if (newVal.speed < 1) {
-            this.idle_time(newVal.imei, true)
-          } else {
-            this.idle_time(newVal.imei, false)
-          }
-          this.stop_time(newVal.imei, false)
+      // if (newVal.ignition !== oldVal.ignition) {
+      if (!newVal.ignition) {
+        if (newVal.speed < 1) {
+          this.idle_time(newVal.imei, true)
         } else {
-          this.stop_time(newVal.imei, true)
           this.idle_time(newVal.imei, false)
         }
+        this.stop_time(newVal.imei, false)
+      } else {
+        this.stop_time(newVal.imei, true)
+        this.idle_time(newVal.imei, false)
       }
-    },
-    getStopTime (newVal) {
-      this.times.stop_time = newVal
-    },
-    getIdleTime (newVal) {
-      this.times.idle_time = newVal
-    },
-    getPoligonOutsideTime (newVal) {
-      this.times.poligon_time = newVal
+      // }
     }
   },
   data () {
@@ -185,10 +150,9 @@ export default {
       idle_icon: require('@/assets/images/hourglass.png'),
       stop_icon: require('@/assets/images/power-button.png'),
       poligon_icon: require('@/assets/images/poligon.png'),
+      vehicleTimesInit: { poligon_outside_times: [], idle_times: [], stop_times: [] },
       times: {
-        poligon_outside_time: true,
         poligon_time: 0,
-        idle_stop_time: true,
         idle_time: 0,
         stop_time: 0
       }
@@ -199,12 +163,15 @@ export default {
       // eslint-disable-next-line prefer-const
       let vehicleTimes = JSON.parse(localStorage.getItem(jwtDefaultConfig.vehicleTimes)) || {}
       if (outside) {
-        if (!vehicleTimes[imei]) vehicleTimes[imei] = { poligon_outside_times: [], idle_times: [], stop_times: [] }
-        vehicleTimes[imei].poligon_outside_times.push({ start: Date.now(), end: '' })
-        this.times.poligon_outside_time = false
+        if (!vehicleTimes[imei]) vehicleTimes[imei] = this.vehicleTimesInit
+        const unclosed = vehicleTimes[imei].poligon_outside_times.find(item => item.start !== '' && item.end === '')
+        if (!unclosed) {
+          vehicleTimes[imei].poligon_outside_times.push({ start: Date.now(), end: '' })
+          this.times.poligon_outside_time = false
+        }
         localStorage.setItem(jwtDefaultConfig.vehicleTimes, JSON.stringify(vehicleTimes, null, 2))
       } else {
-        let poligonTimes = vehicleTimes[imei].poligon_outside_times
+        let poligonTimes = vehicleTimes[imei].poligon_outside_times || []
         const timeData = poligonTimes.find(item => item.end === '')
         if (timeData) {
           poligonTimes = poligonTimes.filter(item => item !== timeData)
@@ -219,12 +186,15 @@ export default {
       // eslint-disable-next-line prefer-const
       let vehicleTimes = JSON.parse(localStorage.getItem(jwtDefaultConfig.vehicleTimes)) || {}
       if (idle) {
-        if (!vehicleTimes[imei]) vehicleTimes[imei] = { poligon_outside_times: [], idle_times: [], stop_times: [] }
-        vehicleTimes[imei].idle_times.push({ start: Date.now(), end: '' })
-        this.times.idle_stop_time = false
+        if (!vehicleTimes[imei]) vehicleTimes[imei] = this.vehicleTimesInit
+        const unclosed = vehicleTimes[imei].idle_times.find(item => item.start !== '' && item.end === '')
+        if (!unclosed) {
+          vehicleTimes[imei].idle_times.push({ start: Date.now(), end: '' })
+          this.times.idle_stop_time = false
+        }
         localStorage.setItem(jwtDefaultConfig.vehicleTimes, JSON.stringify(vehicleTimes, null, 2))
       } else {
-        let idleTimes = vehicleTimes[imei].idle_times
+        let idleTimes = vehicleTimes[imei].idle_times || []
         const timeData = idleTimes.find(item => item.end === '')
         if (timeData) {
           idleTimes = idleTimes.filter(item => item !== timeData)
@@ -239,12 +209,15 @@ export default {
       // eslint-disable-next-line prefer-const
       let vehicleTimes = JSON.parse(localStorage.getItem(jwtDefaultConfig.vehicleTimes)) || {}
       if (stop) {
-        if (!vehicleTimes[imei]) vehicleTimes[imei] = { poligon_outside_times: [], idle_times: [], stop_times: [] }
-        vehicleTimes[imei].stop_times.push({ start: Date.now(), end: '' })
-        this.times.idle_stop_time = false
+        if (!vehicleTimes[imei]) vehicleTimes[imei] = this.vehicleTimesInit
+        const unclosed = vehicleTimes[imei].stop_times.find(item => item.start !== '' && item.end === '')
+        if (!unclosed) {
+          vehicleTimes[imei].stop_times.push({ start: Date.now(), end: '' })
+          this.times.idle_stop_time = false
+        }
         localStorage.setItem(jwtDefaultConfig.vehicleTimes, JSON.stringify(vehicleTimes, null, 2))
       } else {
-        let stopTimes = vehicleTimes[imei].stop_times
+        let stopTimes = vehicleTimes[imei].stop_times || []
         const timeData = stopTimes.find(item => item.end === '')
         if (timeData) {
           stopTimes = stopTimes.filter(item => item !== timeData)
@@ -260,6 +233,23 @@ export default {
       // const seconds = ((millis % 60000) / 1000).toFixed(0)
       // return minutes + ':' + (seconds < 10 ? '0' : '') + seconds
       return minutes
+    },
+    getVehicleTime (type) {
+      const vehicleTimes = JSON.parse(localStorage.getItem(jwtDefaultConfig.vehicleTimes))
+      let totalTime = 0
+      if (vehicleTimes && vehicleTimes[this.data.imei]) {
+        const poligonTimes = vehicleTimes[this.data.imei][type]
+        for (const time of poligonTimes) {
+          const endTime = time.end ? time.end : Date.now()
+          totalTime += this.millisToMinutesAndSeconds(endTime - time.start)
+        }
+      }
+      return totalTime
+    },
+    checkVehicleTimes () {
+      this.times.stop_time = this.getVehicleTime('stop_times')
+      this.times.idle_time = this.getVehicleTime('idle_times')
+      this.times.poligon_time = this.getVehicleTime('poligon_outside_times')
     }
   }
 }

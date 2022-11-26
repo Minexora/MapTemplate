@@ -98,6 +98,7 @@ export default {
       }
     },
     firstValueVehicle (vehicle) {
+      vehicle.coordinates[0].insidePolygon = true
       this.default_popup_vehicle.marker = latLng(vehicle.lat, vehicle.lng)
       this.default_popup_vehicle.imei = vehicle.imei
       this.default_popup_vehicle.rotation = vehicle.coordinates[0].rotation
@@ -107,7 +108,7 @@ export default {
         speed: vehicle.speed,
         ignition: vehicle.batteryPercent, // 0 ise kontak açık 1 ise kontak kapalı
         distance: vehicle.distance,
-        insidePolygon: vehicle.insidePolygon,
+        insidePolygon: vehicle.coordinates[0].insidePolygon,
         type: this.getTypeText(vehicle)
       }
       this.default_popup_vehicle.iconColor = {
