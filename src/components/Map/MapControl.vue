@@ -1,12 +1,12 @@
 <template>
     <div>
-      <l-control class="custom-control-logout">
+      <l-control class="custom-control-logout"  position="bottomright">
         <div class="icon_div" @click="showPanelExit">
           <b-icon icon="lock-fill"></b-icon>
         </div>
       </l-control>
 
-      <l-control class="custom-control-rigth">
+      <l-control class="custom-control-rigth"  position="bottomright">
         <div class="icon_div" @click="showPanelSettings">
           <b-icon icon="gear-fill"></b-icon>
         </div>
@@ -35,35 +35,47 @@ export default {
         title: '',
         position: '',
         show_side: false,
-        content: ''
+        content: '',
+        list: false,
+        menu: false,
+        close: false
       }
     }
   },
   methods: {
     showPanelListMenu () {
+      this.sidebar_data.list = !this.sidebar_data.list
+      this.sidebar_data.menu = false
+      this.sidebar_data.close = false
       this.sidebar_data.title = 'Araç Listesi'
       this.sidebar_data.position = 'left'
       this.sidebar_data.show_side = true
-      this.sidebar_data.isShow = true
+      this.sidebar_data.isShow = this.sidebar_data.list
       this.sidebar_data.content = 1
       this.$store.commit('sidebar/set_sidebarData', this.sidebar_data)
       // this.log()
     },
     showPanelSettings () {
+      this.sidebar_data.menu = !this.sidebar_data.menu
+      this.sidebar_data.list = false
+      this.sidebar_data.close = false
       this.sidebar_data.title = 'Settings Menu'
       this.sidebar_data.position = 'right'
       this.sidebar_data.show_side = true
-      this.sidebar_data.isShow = true
+      this.sidebar_data.isShow = this.sidebar_data.menu
       this.sidebar_data.content = 2
       this.$store.commit('sidebar/set_sidebarData', this.sidebar_data)
       // this.log()
     },
 
     showPanelExit () {
+      this.sidebar_data.close = !this.sidebar_data.close
+      this.sidebar_data.list = false
+      this.sidebar_data.menu = false
       this.sidebar_data.title = 'ÇIKIŞ'
       this.sidebar_data.position = 'right'
       this.sidebar_data.show_side = true
-      this.sidebar_data.isShow = true
+      this.sidebar_data.isShow = this.sidebar_data.close
       this.sidebar_data.content = 3
       this.$store.commit('sidebar/set_sidebarData', this.sidebar_data)
       // this.log()

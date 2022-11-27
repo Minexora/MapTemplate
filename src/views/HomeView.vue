@@ -127,6 +127,7 @@ export default {
         this.map_locations = this.map_locations.map(item => ({
           ...item,
           marker: item.imei === vehicle.imei ? latLng(vehicle.lat, vehicle.lng) : item.marker,
+          rotation: item.imei === vehicle.imei ? vehicle.coordinates[0].rotation : item.rotation,
           popup_data: {
             ...item.popup_data,
             speed: item.imei === vehicle.imei ? vehicle.speed : item.popup_data.speed,

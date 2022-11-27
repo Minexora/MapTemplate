@@ -14,7 +14,7 @@
         :attribution="attribution"
       />
       <div v-for="(location, index) in locations" :key="index">
-       <l-marker :marker="location.marker" :popup="location.popup" :tooltip="location.tooltip" :popup_data="location.popup_data" :tooltip_data="location.tooltip_data" :iconColor="location.iconColor" >
+       <l-marker :marker="location.marker" :rotation="location.rotation" :popup="location.popup" :tooltip="location.tooltip" :popup_data="location.popup_data" :tooltip_data="location.tooltip_data" :iconColor="location.iconColor" >
         </l-marker>
       </div>
       <div v-for="(item, index) in waypoints" :key="index+ '_point'">

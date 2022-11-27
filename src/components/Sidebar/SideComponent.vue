@@ -2,8 +2,8 @@
 <template>
 
   <b-sidebar ref="_sidebar" :visible="isShow" :right="position === 'right'" @change="changeSidebar" sidebar-class="custom-body" no-header shadow>
-    <template #default="{ hide }">
-        <div class="d-flex flex-row justify-content-center align-items-center font-weight-bold">
+    <template #default="{  }">
+       <!-- <div class="d-flex flex-row justify-content-center align-items-center font-weight-bold">
           <div class="col col-12 col-md-2 p-2">
             <div class="close" @click="hide">
               <span></span>
@@ -21,7 +21,7 @@
             </div>
           </div>
           <h2 class="col col-12 col-md-10 m-0">{{title}}</h2>
-        </div>
+        </div> -->
         <!-- TODO: Buraya menu componenti yazılacak! -->
 
         <car-list  class="mt-4" v-if="content === 1"/>
@@ -31,7 +31,7 @@
           <b-modals :isShow.sync="modal"  :size="'xl'" :title="'Deneme'" />
         </div>
 
-      </template>
+    </template> -->
       <template v-if="content === 3" #footer="{  }">
             <div class="d-flex custom-footer text-light align-items-center px-3 py-2">
              <div class="row">
@@ -146,6 +146,7 @@ export default {
       font-size: 16px;
       color: white !important;
       width: 420px !important;
+      height: 90%;
       background-color: rgba(47,64,80,0.9) !important;
   }
   .close{
@@ -240,7 +241,7 @@ export default {
       margin-right: 0px;
       font-size: 21px;
       color: rgb(253, 111, 9);
-      width: 20px;
+      width: 35px;
       background-color: rgba(47,64,80,0.9);
       border-radius: 20px 0px 0px 20px;
     }
