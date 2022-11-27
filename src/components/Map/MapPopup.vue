@@ -24,6 +24,14 @@
            {{data.type}}
           </div>
         </div>
+        <div class="row mt-2">
+          <div class="col col-12 col-md-4">
+            <strong>Tarih :</strong>
+          </div>
+           <div class="col col-12 col-md-8">
+           {{getDate}}
+          </div>
+        </div>
         <hr>
         <div class="row">
           <div class="col col-12 col-md-4 p-1 text-center">
@@ -120,11 +128,13 @@ export default {
     })
   },
   computed: {
-
+    getDate () {
+      return this.data?.date?.replace('T', ' ')
+    }
   },
   watch: {
     data (newVal, oldVal) {
-      if (typeof newVal.insidePolygon !== 'undefined' && !newVal.insidePolygon) {
+      if (typeof newVal.insidePolygon !== 'undefined') {
         this.poligon_outside_time(newVal.imei, !newVal.insidePolygon)
       }
       // if (newVal.ignition !== oldVal.ignition) {
@@ -171,7 +181,7 @@ export default {
         }
         localStorage.setItem(jwtDefaultConfig.vehicleTimes, JSON.stringify(vehicleTimes, null, 2))
       } else {
-        let poligonTimes = vehicleTimes[imei].poligon_outside_times || []
+        let poligonTimes = vehicleTimes[imei]?.poligon_outside_times || []
         const timeData = poligonTimes.find(item => item.end === '')
         if (timeData) {
           poligonTimes = poligonTimes.filter(item => item !== timeData)
@@ -194,7 +204,7 @@ export default {
         }
         localStorage.setItem(jwtDefaultConfig.vehicleTimes, JSON.stringify(vehicleTimes, null, 2))
       } else {
-        let idleTimes = vehicleTimes[imei].idle_times || []
+        let idleTimes = vehicleTimes[imei]?.idle_times || []
         const timeData = idleTimes.find(item => item.end === '')
         if (timeData) {
           idleTimes = idleTimes.filter(item => item !== timeData)
@@ -217,7 +227,7 @@ export default {
         }
         localStorage.setItem(jwtDefaultConfig.vehicleTimes, JSON.stringify(vehicleTimes, null, 2))
       } else {
-        let stopTimes = vehicleTimes[imei].stop_times || []
+        let stopTimes = vehicleTimes[imei]?.stop_times || []
         const timeData = stopTimes.find(item => item.end === '')
         if (timeData) {
           stopTimes = stopTimes.filter(item => item !== timeData)

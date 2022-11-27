@@ -131,12 +131,19 @@ export default {
       this.selected_cars = this.selected_cars.filter(item => item.imei !== car.imei)
       this.$store.commit('vehicle/set_showVehicles', this.selected_cars.length < 1 ? [] : this.selected_cars)
       this.intervalClear(car)
+      this.removeVehicleTime(car.imei)
     },
     intervalClear (vehicle) {
       clearInterval(this.intervals[vehicle.imei])
       delete this.intervals[vehicle.imei]
       this.$store.commit('vehicle/remove_way_points', vehicle.imei)
       this.$store.commit('vehicle/set_intervals', this.intervals)
+    },
+    removeVehicleTime (imei) {
+      // eslint-disable-next-line prefer-const
+      let vehicleTimes = JSON.parse(localStorage.getItem(endpoints.vehicleTimes)) || {}
+      delete vehicleTimes[imei]
+      localStorage.setItem(endpoints.vehicleTimes, JSON.stringify(vehicleTimes, null, 2))
     }
   }
 }

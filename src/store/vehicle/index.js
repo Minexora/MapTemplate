@@ -99,6 +99,8 @@ export default {
         vehicle.speed = _vehicle.speed
         vehicle.distance = _vehicle.distance
         vehicle.coordinates[0].insidePolygon = _vehicle.insidePolygon
+        vehicle.coordinates[0].batteryPercent = _vehicle.ignition
+        vehicle.lastData = _vehicle.date
       }
       state.show_vehicles.push(vehicle)
     },

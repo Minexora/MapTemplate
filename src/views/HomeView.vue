@@ -131,8 +131,9 @@ export default {
             ...item.popup_data,
             speed: item.imei === vehicle.imei ? vehicle.speed : item.popup_data.speed,
             distance: item.imei === vehicle.imei ? vehicle.distance : item.popup_data.distance,
-            ignition: item.imei === vehicle.imei ? vehicle.batteryPercent : item.popup_data.ignition,
-            insidePolygon: item.imei === vehicle.imei ? vehicle.coordinates[0].insidePolygon : item.popup_data.insidePolygon
+            ignition: item.imei === vehicle.imei ? vehicle.coordinates[0].batteryPercent : item.popup_data.ignition,
+            insidePolygon: item.imei === vehicle.imei ? vehicle.coordinates[0].insidePolygon : item.popup_data.insidePolygon,
+            date: item.imei === vehicle.imei ? vehicle.lastData : item.popup_data.date
           }
         })
         )
@@ -168,7 +169,9 @@ export default {
                 speed: item.speed,
                 distance: item.distance,
                 imei: vehicle.imei,
-                insidePolygon: item.insidePolygon
+                insidePolygon: item.insidePolygon,
+                ignition: item.batteryPercent,
+                date: res?.data?.data?.lastData
               }
               this.$store.commit('vehicle/set_last_location', vehicleLastLocation)
             })
