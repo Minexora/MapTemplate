@@ -27,8 +27,8 @@
         <car-list  class="mt-4" v-if="content === 1"/>
 
         <div v-if="content === 2">
-          <b-button @click="showModal">Open Modal</b-button>
-          <b-modals :isShow.sync="modal"  :size="'xl'" :title="'Deneme'" />
+          <b-button @click="showModal">ANA MENÜ</b-button>
+          <b-modals :isShow.sync="modal"  :size="'2xl'" :title="'Deneme'" />
         </div>
 
     </template> -->

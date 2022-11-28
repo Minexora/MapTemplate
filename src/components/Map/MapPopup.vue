@@ -76,7 +76,7 @@
               <strong>Araç Rölanti Süresi(DK)</strong>
             </div>
              <div class="col col-12 col-md-12">
-              {{times.poligon_time}}
+              {{times.idle_time}}
             </div>
           </div>
           <div class="col col-12 col-md-4 p-1 text-center">
@@ -95,10 +95,10 @@
             <img :id='data.imei + "_popup_stop"' :src='poligon_icon' class="img-fluid rounded-start col col-1 col-md-8">
           </div>
           <div class="col col-12 col-md-12 mb-1">
-            <strong>Poligon Dışındaki Süre(DK)</strong>
+            <strong>Bölge Dışındaki Süre(DK)</strong>
           </div>
             <div class="col col-12 col-md-12">
-            {{times.idle_time}}
+            {{times.poligon_time}}
           </div>
           </div>
         </div>
@@ -119,13 +119,13 @@ export default {
     }
   },
   created () {
-    this.$crontab.addJob({
+    this.crons.push(this.$crontab.addJob({
       name: 'counter',
       interval: {
         seconds: '/5'
       },
       job: this.checkVehicleTimes
-    })
+    }))
   },
   computed: {
     getDate () {
@@ -154,12 +154,13 @@ export default {
   },
   data () {
     return {
+      crons: [],
       speed_icon: require('@/assets/images/speedometer.png'),
       distance_icon: require('@/assets/images/distance.png'),
       ignition_icon: require('@/assets/images/ignition.png'),
-      idle_icon: require('@/assets/images/hourglass.png'),
-      stop_icon: require('@/assets/images/power-button.png'),
-      poligon_icon: require('@/assets/images/poligon.png'),
+      idle_icon: require('@/assets/images/rolanti.png'),
+      stop_icon: require('@/assets/images/park.png'),
+      poligon_icon: require('@/assets/images/outside.png'),
       vehicleTimesInit: { poligon_outside_times: [], idle_times: [], stop_times: [] },
       times: {
         poligon_time: 0,
@@ -248,7 +249,12 @@ export default {
       const vehicleTimes = JSON.parse(localStorage.getItem(jwtDefaultConfig.vehicleTimes))
       let totalTime = 0
       if (vehicleTimes && vehicleTimes[this.data.imei]) {
+        console.log('-------------')
+        console.log('this.data.imei: ', this.data.imei)
+        console.log('vehicleTimes[this.data.imei]: ', vehicleTimes[this.data.imei])
         const poligonTimes = vehicleTimes[this.data.imei][type]
+        console.log('poligonTimes: ', poligonTimes)
+        console.log('-------------')
         for (const time of poligonTimes) {
           const endTime = time.end ? time.end : Date.now()
           totalTime += this.millisToMinutesAndSeconds(endTime - time.start)

@@ -45,6 +45,20 @@ export default {
       10: require('../../assets/images/catamaran.png'),
       11: require('../../assets/images/wristwatch.png')
     },
+    vehicleTypesIconRed: {
+      0: require('../../assets/images/sedan-red.png'),
+      1: require('../../assets/images/pickup-truck-red.png'),
+      2: require('../../assets/images/camper-van-red.png'),
+      3: require('../../assets/images/truck-red.png'),
+      4: require('../../assets/images/safari-red.png'),
+      5: require('../../assets/images/motorbike-red.png'),
+      6: require('../../assets/images/minivan-red.png'),
+      7: require('../../assets/images/school-bus-red.png'),
+      8: require('../../assets/images/minibus-red.png'),
+      9: require('../../assets/images/boat-red.png'),
+      10: require('../../assets/images/catamaran-red.png'),
+      11: require('../../assets/images/wristwatch-red.png')
+    },
     show_vehicles: [],
     waypoints: [],
     vehicles: [],

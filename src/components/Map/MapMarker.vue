@@ -77,7 +77,7 @@ export default {
       car: require('@/assets/images/car_1.png'),
       stop: require('@/assets/images/park.png'),
       rolanti: require('@/assets/images/rolanti.png'),
-      outside: require('@/assets/images/rolanti.png'),
+      outside: require('@/assets/images/outside.png'),
       styles: '',
       defaultIcon: ''
     }
@@ -87,7 +87,6 @@ export default {
       this.styles = this.getRotate()
     },
     marker () {
-      console.log('this.styles:', this.styles)
       this.styles = this.getRotate()
     },
     popup_data (data) {
@@ -185,4 +184,5 @@ export default {
   position: absolute;
   left: 4px;
 }
+
 </style>

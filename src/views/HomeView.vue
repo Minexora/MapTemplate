@@ -194,6 +194,10 @@ export default {
     getIconsBlc (vehicle) {
       const icons = this.$store.getters['vehicle/get_vehicleTypesIconBlc']
       return icons[vehicle.type]
+    },
+    getIconsRed (vehicle) {
+      const icons = this.$store.getters['vehicle/get_vehicleTypesIconRed']
+      return icons[vehicle.type]
     }
   }
 }
