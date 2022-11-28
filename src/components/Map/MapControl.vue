@@ -88,33 +88,33 @@ export default {
 </script>
 
 <style lang="scss">
-    .custom-control {
-        display:block;
-        color: currentColor;
-        text-align:center;
-        font-size:2em;
-        cursor: pointer !important;
-        border: 1px solid rgba(0,0,0,0.5);
-        border-bottom: 3px solid rgba(0,0,0,0.5);
-        border-radius: 100% !important;
-        -moz-border-radius: 3px;
-        -webkit-border-radius: 3px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.5), /* Exterior Shadow */
-          inset 0 1px rgba(255,255,255,0.3), /* Top light Line */
-          inset 0 10px rgba(255,255,255,0.2), /* Top Light Shadow */
-          inset 0 10px 20px rgba(255,255,255,0.25), /* Sides Light Shadow */
-          inset 0 -15px 30px rgba(0,0,0,0.3); /* Dark Background */
-        -webkit-box-shadow: 0 2px 8px rgba(0,0,0,0.5),
-          inset 0 1px rgba(255,255,255,0.3),
-          inset 0 10px rgba(255,255,255,0.2),
-          inset 0 10px 20px rgba(255,255,255,0.25),
-          inset 0 -15px 30px rgba(0,0,0,0.3);
-        -moz-box-shadow: 0 2px 8px rgba(0,0,0,0.5),
-          inset 0 1px rgba(255,255,255,0.3),
-          inset 0 10px rgba(255,255,255,0.2),
-          inset 0 10px 20px rgba(255,255,255,0.25),
-          inset 0 -15px 30px rgba(0,0,0,0.3);
-    }
+    // .custom-control {
+    //     display:block;
+    //     color: currentColor;
+    //     text-align:center;
+    //     font-size:2em;
+    //     cursor: pointer !important;
+    //     border: 1px solid rgba(0,0,0,0.5);
+    //     border-bottom: 3px solid rgba(0,0,0,0.5);
+    //     border-radius: 100% !important;
+    //     -moz-border-radius: 3px;
+    //     -webkit-border-radius: 3px;
+    //     box-shadow: 0 2px 8px rgba(0,0,0,0.5), /* Exterior Shadow */
+    //       inset 0 1px rgba(255,255,255,0.3), /* Top light Line */
+    //       inset 0 10px rgba(255,255,255,0.2), /* Top Light Shadow */
+    //       inset 0 10px 20px rgba(255,255,255,0.25), /* Sides Light Shadow */
+    //       inset 0 -15px 30px rgba(0,0,0,0.3); /* Dark Background */
+    //     -webkit-box-shadow: 0 2px 8px rgba(0,0,0,0.5),
+    //       inset 0 1px rgba(255,255,255,0.3),
+    //       inset 0 10px rgba(255,255,255,0.2),
+    //       inset 0 10px 20px rgba(255,255,255,0.25),
+    //       inset 0 -15px 30px rgba(0,0,0,0.3);
+    //     -moz-box-shadow: 0 2px 8px rgba(0,0,0,0.5),
+    //       inset 0 1px rgba(255,255,255,0.3),
+    //       inset 0 10px rgba(255,255,255,0.2),
+    //       inset 0 10px 20px rgba(255,255,255,0.25),
+    //       inset 0 -15px 30px rgba(0,0,0,0.3);
+    // }
     .custom-control > p {
           margin: 0px;
     }

@@ -28,7 +28,7 @@
 
         <div v-if="content === 2">
           <b-button @click="showModal">ANA MENÜ</b-button>
-          <b-modals :isShow.sync="modal"  :size="'2xl'" :title="'Deneme'" />
+          <b-modals :isShow.sync="modal"  :size="'xl'" :title="'Deneme'" />
         </div>
 
     </template> -->

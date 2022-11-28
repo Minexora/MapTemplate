@@ -91,15 +91,20 @@
             </div>
           </div>
           <div class="col col-12 col-md-4 p-1 text-center">
-          <div class="col col-12 col-md-12 mb-1">
-            <img :id='data.imei + "_popup_stop"' :src='poligon_icon' class="img-fluid rounded-start col col-1 col-md-8">
-          </div>
-          <div class="col col-12 col-md-12 mb-1">
-            <strong>Bölge Dışındaki Süre(DK)</strong>
-          </div>
+            <div class="col col-12 col-md-12 mb-1">
+              <img :id='data.imei + "_popup_stop"' :src='poligon_icon' class="img-fluid rounded-start col col-1 col-md-8">
+            </div>
+            <div class="col col-12 col-md-12 mb-1">
+              <strong>Bölge Dışındaki Süre(DK)</strong>
+            </div>
             <div class="col col-12 col-md-12">
-            {{times.poligon_time}}
+              {{times.poligon_time}}
+            </div>
           </div>
+          <hr>
+          <div class="col col-12 col-md-12 p-1 text-center">
+            <b-button pill variant="success" size="sm" @click="modal = true">Sefer Listesi</b-button>
+            <b-modals :isShow.sync="modal"  :size="'xl'" :type="'expedition'" :title="'Sefer Listesi'" />
           </div>
         </div>
     </l-popup>
@@ -108,10 +113,12 @@
 <script>
 import { LPopup } from 'vue2-leaflet'
 import jwtDefaultConfig from '@/@core/auth/jwt/jwtDefaultConfig'
+import ModalComponent from '@/components/ModalComponent.vue'
 export default {
   name: 'MapPopup',
   components: {
-    'l-popup': LPopup
+    'l-popup': LPopup,
+    'b-modals': ModalComponent
   },
   props: {
     data: {
@@ -155,6 +162,7 @@ export default {
   data () {
     return {
       crons: [],
+      modal: false,
       speed_icon: require('@/assets/images/speedometer.png'),
       distance_icon: require('@/assets/images/distance.png'),
       ignition_icon: require('@/assets/images/ignition.png'),

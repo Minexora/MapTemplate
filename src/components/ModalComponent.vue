@@ -11,19 +11,27 @@
     :ok-only="okOnly"
     :hide-footer="hideFooter"
     >
-        Hello Extra Large Modal! {{size}}
+      <expedition-package-component v-if="type === 'expedition'" />
     </b-modal>
 </template>
 
 <script>
+import ExpeditionPackageComponent from '@/components/Modals/ExpeditionPackageComponent.vue'
 export default {
   name: 'ModalComponent',
+  components: {
+    ExpeditionPackageComponent
+  },
   props: {
     size: {
       type: String,
       default: 'xl'
     },
     title: {
+      type: String,
+      required: true
+    },
+    type: {
       type: String,
       required: true
     },
@@ -62,6 +70,9 @@ export default {
     background-color: transparent;
     border-color: #ffc107;
     border-radius: 100%;
+}
+.sr-only{
+    display: none;
 }
 
 </style>

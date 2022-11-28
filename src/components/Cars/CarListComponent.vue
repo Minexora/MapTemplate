@@ -160,7 +160,7 @@ export default {
   padding: 5px;
 }
 .car-list {
-  height: 78vh;
+  height: 75vh;
   overflow-y:scroll;
 }
 .car-list::-webkit-scrollbar {
