@@ -102,6 +102,7 @@ export default {
   created () {
     this.defaultIcon = this.getİcon()
     this.styles = this.getRotate()
+    setInterval(() => { this.getTimes() }, 2000)
   },
   computed: {
     green_icon () {
