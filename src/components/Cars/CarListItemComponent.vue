@@ -33,6 +33,10 @@ export default {
     allSelect: {
       type: Boolean,
       default: false
+    },
+    select: {
+      type: Boolean,
+      default: false
     }
   },
   data () {
@@ -56,6 +60,9 @@ export default {
       }
     },
     allSelect (newVal) {
+      this.selected = newVal
+    },
+    select (newVal) {
       this.selected = newVal
     }
   },

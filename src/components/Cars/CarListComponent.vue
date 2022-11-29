@@ -42,7 +42,7 @@
     </div>
     <div class="col col-12 col-md-12 car-list">
       <div v-if="this.cars.length >= 1">
-        <car-list-item  v-for="car in cars" :key="car.imei" :vehicle="car" :allSelect="all_selected" @selectedCar="select_car"  @unselectedCar="unselect_car" />
+        <car-list-item  v-for="car in cars" :key="car.imei" :vehicle="car"  :allSelect="all_selected" @selectedCar="select_car"  @unselectedCar="unselect_car" />
       </div>
       <not-found-data v-if="this.cars.length < 1"/>
     </div>
@@ -97,7 +97,7 @@ export default {
           this.cars = this.storedCars
         }
       }
-      this.$store.commit('vehicle/set_showVehicles', [])
+      // this.$store.commit('vehicle/set_showVehicles', [])
     },
     filter_vehicle (newVal) {
       this.storedCars = this.$store.getters['vehicle/get_vehicle']
@@ -115,8 +115,13 @@ export default {
     }
   },
   methods: {
+    logout () {
+      localStorage.clear()
+      this.$router.push({ name: 'login' }).catch(err => console.log(err))
+    },
     getCarList () {
       useJwt.get(endpoints.getDevicesOnline2).then((res) => {
+        if (res.data.error === 'Exception') this.logout()
         this.cars = res?.data?.data || []
         this.cars.map(item => ({ ...item, isPlay: 0 }))
         this.$store.commit('vehicle/set_vehicles', this.cars)
