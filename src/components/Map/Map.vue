@@ -30,6 +30,7 @@
 import { LMap, LTileLayer, LPolyline } from 'vue2-leaflet'
 import MapMarker from '@/components/Map/MapMarker.vue'
 import MapControl from '@/components/Map/MapControl.vue'
+import jwtDefaultConfig from '@/@core/auth/jwt/jwtDefaultConfig'
 // import RoutingMachine from '@/components/Map/RoutingMachine.vue'
 
 export default {
@@ -45,6 +46,15 @@ export default {
     // 'l-routing-machine': RoutingMachine
 
     'l-polyline': LPolyline
+  },
+  created () {
+    this.$crontab.addJob({
+      name: 'counter',
+      interval: {
+        seconds: '/5'
+      },
+      job: this.checkVehicleTimes
+    })
   },
   mounted () {
 
@@ -99,6 +109,38 @@ export default {
     },
     centerUpdate (center) {
       this.currentCenter = center
+    },
+    millisToMinutesAndSeconds (millis) {
+      const minutes = Math.floor(millis / 60000)
+      // const seconds = ((millis % 60000) / 1000).toFixed(0)
+      // return minutes + ':' + (seconds < 10 ? '0' : '') + seconds
+      return minutes
+    },
+    getVehicleTime (type) {
+      const vehicleTimes = JSON.parse(localStorage.getItem(jwtDefaultConfig.vehicleTimes))
+      const result = localStorage.getItem(jwtDefaultConfig.resultTimes)
+      // eslint-disable-next-line prefer-const
+      let timeData = result && typeof result === 'string' ? JSON.parse(result) : {}
+      if (Object.keys(vehicleTimes).length > 0) {
+        for (const time of Object.keys(vehicleTimes)) {
+          let totalTime = 0
+          if (!(time in timeData)) timeData[time] = {}
+          const typeTimes = vehicleTimes[time][type]
+          for (const time of typeTimes) {
+            const endTime = time.end ? time.end : Date.now()
+            totalTime += this.millisToMinutesAndSeconds(endTime - time.start)
+          }
+          timeData[time][type] = totalTime
+        }
+        localStorage.setItem(jwtDefaultConfig.resultTimes, JSON.stringify(timeData, null, 2))
+      } else {
+        localStorage.setItem(jwtDefaultConfig.resultTimes, null)
+      }
+    },
+    checkVehicleTimes () {
+      this.getVehicleTime('stop_times')
+      this.getVehicleTime('idle_times')
+      this.getVehicleTime('poligon_outside_times')
     }
   }
 }

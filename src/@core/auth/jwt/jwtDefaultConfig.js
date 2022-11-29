@@ -16,5 +16,6 @@ export default {
   storageRefreshTokenKeyName: 'refreshToken',
   storageUserDataKeyName: 'u',
   storageVehicles: 'V',
-  vehicleTimes: 'Vt'
+  vehicleTimes: 'Vt',
+  resultTimes: 'VtR'
 }

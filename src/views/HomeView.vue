@@ -139,6 +139,7 @@ export default {
         })
         )
       }
+      console.log('map_locations:', this.map_locations)
     },
     intervalClear (vehicle) {
       clearInterval(this.intervals[vehicle.imei])

@@ -1,6 +1,6 @@
 <template>
     <l-marker :lat-lng="marker"  :icon="defaultIcon">
-        <l-popup v-if="popup" @innerClick="innerClick" :data="popup_data" />
+        <l-popup v-if="popup" @innerClick="innerClick" :data="popup_data" :times="getTimes" />
         <l-tooltip v-if="tooltip"  @innerClick="innerClick" :data="tooltip_data" />
     </l-marker>
 </template>
@@ -10,6 +10,7 @@ import L from 'leaflet'
 import { LMarker } from 'vue2-leaflet'
 import MapTooltip from '@/components/Map/MapTooltip.vue'
 import MapPopup from '@/components/Map/MapPopup.vue'
+import jwtDefaultConfig from '@/@core/auth/jwt/jwtDefaultConfig'
 // import 'leaflet-extra-markers'
 export default {
   name: 'MapMarker',
@@ -125,6 +126,15 @@ export default {
                 </g>
               </svg>`
       })
+    },
+
+    getTimes () {
+      const resultTimes = JSON.parse(localStorage.getItem(jwtDefaultConfig.resultTimes))
+      return {
+        poligon_time: resultTimes[this.popup_data.imei]?.poligon_outside_times || 0,
+        idle_time: resultTimes[this.popup_data.imei]?.idle_times || 0,
+        stop_time: resultTimes[this.popup_data.imei]?.stop_times || 0
+      }
     }
   },
   methods: {

@@ -122,17 +122,13 @@ export default {
   },
   props: {
     data: {
-      type: Object
+      type: Object,
+      default: () => {}
+    },
+    times: {
+      type: Object,
+      default: () => {}
     }
-  },
-  created () {
-    this.crons.push(this.$crontab.addJob({
-      name: 'counter',
-      interval: {
-        seconds: '/5'
-      },
-      job: this.checkVehicleTimes
-    }))
   },
   computed: {
     getDate () {
@@ -169,12 +165,7 @@ export default {
       idle_icon: require('@/assets/images/rolanti.png'),
       stop_icon: require('@/assets/images/park.png'),
       poligon_icon: require('@/assets/images/outside.png'),
-      vehicleTimesInit: { poligon_outside_times: [], idle_times: [], stop_times: [] },
-      times: {
-        poligon_time: 0,
-        idle_time: 0,
-        stop_time: 0
-      }
+      vehicleTimesInit: { poligon_outside_times: [], idle_times: [], stop_times: [] }
     }
   },
   methods: {
@@ -186,7 +177,6 @@ export default {
         const unclosed = vehicleTimes[imei].poligon_outside_times.find(item => item.start !== '' && item.end === '')
         if (!unclosed) {
           vehicleTimes[imei].poligon_outside_times.push({ start: Date.now(), end: '' })
-          this.times.poligon_outside_time = false
         }
         localStorage.setItem(jwtDefaultConfig.vehicleTimes, JSON.stringify(vehicleTimes, null, 2))
       } else {
@@ -209,7 +199,6 @@ export default {
         const unclosed = vehicleTimes[imei].idle_times.find(item => item.start !== '' && item.end === '')
         if (!unclosed) {
           vehicleTimes[imei].idle_times.push({ start: Date.now(), end: '' })
-          this.times.idle_stop_time = false
         }
         localStorage.setItem(jwtDefaultConfig.vehicleTimes, JSON.stringify(vehicleTimes, null, 2))
       } else {
@@ -232,7 +221,6 @@ export default {
         const unclosed = vehicleTimes[imei].stop_times.find(item => item.start !== '' && item.end === '')
         if (!unclosed) {
           vehicleTimes[imei].stop_times.push({ start: Date.now(), end: '' })
-          this.times.idle_stop_time = false
         }
         localStorage.setItem(jwtDefaultConfig.vehicleTimes, JSON.stringify(vehicleTimes, null, 2))
       } else {
@@ -246,35 +234,8 @@ export default {
           localStorage.setItem(jwtDefaultConfig.vehicleTimes, JSON.stringify(vehicleTimes, null, 2))
         }
       }
-    },
-    millisToMinutesAndSeconds (millis) {
-      const minutes = Math.floor(millis / 60000)
-      // const seconds = ((millis % 60000) / 1000).toFixed(0)
-      // return minutes + ':' + (seconds < 10 ? '0' : '') + seconds
-      return minutes
-    },
-    getVehicleTime (type) {
-      const vehicleTimes = JSON.parse(localStorage.getItem(jwtDefaultConfig.vehicleTimes))
-      let totalTime = 0
-      if (vehicleTimes && vehicleTimes[this.data.imei]) {
-        console.log('-------------')
-        console.log('this.data.imei: ', this.data.imei)
-        console.log('vehicleTimes[this.data.imei]: ', vehicleTimes[this.data.imei])
-        const poligonTimes = vehicleTimes[this.data.imei][type]
-        console.log('poligonTimes: ', poligonTimes)
-        console.log('-------------')
-        for (const time of poligonTimes) {
-          const endTime = time.end ? time.end : Date.now()
-          totalTime += this.millisToMinutesAndSeconds(endTime - time.start)
-        }
-      }
-      return totalTime
-    },
-    checkVehicleTimes () {
-      this.times.stop_time = this.getVehicleTime('stop_times')
-      this.times.idle_time = this.getVehicleTime('idle_times')
-      this.times.poligon_time = this.getVehicleTime('poligon_outside_times')
     }
+
   }
 }
 </script>

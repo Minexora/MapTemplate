@@ -142,8 +142,12 @@ export default {
     removeVehicleTime (imei) {
       // eslint-disable-next-line prefer-const
       let vehicleTimes = JSON.parse(localStorage.getItem(endpoints.vehicleTimes)) || {}
+      // eslint-disable-next-line prefer-const
+      let result = JSON.parse(localStorage.getItem(endpoints.resultTimes)) || {}
       delete vehicleTimes[imei]
+      delete result[imei]
       localStorage.setItem(endpoints.vehicleTimes, JSON.stringify(vehicleTimes, null, 2))
+      localStorage.setItem(endpoints.resultTimes, JSON.stringify(result, null, 2))
     }
   }
 }
