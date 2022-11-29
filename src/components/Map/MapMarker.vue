@@ -130,10 +130,18 @@ export default {
 
     getTimes () {
       const resultTimes = JSON.parse(localStorage.getItem(jwtDefaultConfig.resultTimes))
-      return {
-        poligon_time: resultTimes[this.popup_data.imei]?.poligon_outside_times || 0,
-        idle_time: resultTimes[this.popup_data.imei]?.idle_times || 0,
-        stop_time: resultTimes[this.popup_data.imei]?.stop_times || 0
+      if (resultTimes) {
+        return {
+          poligon_time: resultTimes[this.popup_data.imei]?.poligon_outside_times || 0,
+          idle_time: resultTimes[this.popup_data.imei]?.idle_times || 0,
+          stop_time: resultTimes[this.popup_data.imei]?.stop_times || 0
+        }
+      } else {
+        return {
+          poligon_time: 0,
+          idle_time: 0,
+          stop_time: 0
+        }
       }
     }
   },
@@ -165,7 +173,7 @@ export default {
     getRotate () {
       return `transform: rotate(${this.rotation}deg)`
     },
-    getİcon (icon = 'car') {
+    getİcon (icon = 'stop') {
       return L.divIcon({
         className: 'my-custom-pin',
         html: `${this.createSvg(icon, this.iconColor.color)} <img src="${this.iconColor.markerIcon}" class="markerIcon">`,

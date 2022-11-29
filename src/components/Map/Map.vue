@@ -117,10 +117,11 @@ export default {
       return minutes
     },
     getVehicleTime (type) {
-      const vehicleTimes = JSON.parse(localStorage.getItem(jwtDefaultConfig.vehicleTimes))
+      const times = localStorage.getItem(jwtDefaultConfig.vehicleTimes)
+      const vehicleTimes = times && typeof times === 'string' ? JSON.parse(times) : {}
       const result = localStorage.getItem(jwtDefaultConfig.resultTimes)
       // eslint-disable-next-line prefer-const
-      let timeData = result && typeof result === 'string' ? JSON.parse(result) : {}
+      let timeData = result && typeof result === 'string' && result !== 'null' ? JSON.parse(result) : {}
       if (Object.keys(vehicleTimes).length > 0) {
         for (const time of Object.keys(vehicleTimes)) {
           let totalTime = 0
