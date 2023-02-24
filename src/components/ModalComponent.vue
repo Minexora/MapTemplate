@@ -12,15 +12,22 @@
     :hide-footer="hideFooter"
     >
       <expedition-package-component v-if="type === 'expedition'" />
+      <vehicle-fence-report-component v-if="type === 'vehicle_fence'" />
+      <vehicle-fence-report-component v-if="type === 'vehicle_expedition'" />
+      <vehicle-fence-report-component v-if="type === 'fence'" />
+      <vehicle-fence-report-component v-if="type === 'distance'" />
     </b-modal>
 </template>
 
 <script>
 import ExpeditionPackageComponent from '@/components/Modals/ExpeditionPackageComponent.vue'
+import VehicleFenceReportComponent from '@/components/Modals/VehicleFenceReportComponent.vue'
 export default {
   name: 'ModalComponent',
   components: {
-    ExpeditionPackageComponent
+    ExpeditionPackageComponent,
+    // eslint-disable-next-line vue/no-unused-components
+    VehicleFenceReportComponent
   },
   props: {
     size: {
