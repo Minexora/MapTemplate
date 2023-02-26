@@ -1,7 +1,7 @@
 import Vue from 'vue'
-import { BootstrapVue, IconsPlugin, ModalPlugin, ToastPlugin, BootstrapVueIcons } from 'bootstrap-vue'
 import { Icon } from 'leaflet'
 import VueCrontab from 'vue-crontab'
+import { BootstrapVue, IconsPlugin, ModalPlugin, ToastPlugin, BootstrapVueIcons } from 'bootstrap-vue'
 
 Vue.use(VueCrontab)
 Vue.use(ToastPlugin)
