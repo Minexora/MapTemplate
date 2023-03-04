@@ -1,11 +1,11 @@
 <template>
   <div>
     <b-row>
-      <b-col class="col col-12 col-md-6 col-lg-5 col-xl-4">
+      <b-col class="col col-12 col-md-4 col-lg-4 col-xl-3">
         <car-list-component-for-report />
       </b-col>
 
-      <b-col class="col col-12 col-md-6 col-lg-7 col-xl-8">
+      <b-col class="col col-12 col-md-8 col-lg-8 col-xl-9">
         <main-table-component :fields="headers" :items="items" />
       </b-col>
     </b-row>

@@ -2,7 +2,7 @@
   <div class="col col-12 col-md-12">
     <div class="row d-flex justify-content-between mb-2 mt-2">
       <div
-        class="col col-12 col-sm-6 col-md-5 col-lg-4 col-xl-3 mb-2"
+        class="col col-12 col-sm-3 col-md-3 col-lg-3 col-xl-3 mb-2"
         v-if="_filter"
       >
         <b-form-group
@@ -31,7 +31,7 @@
         </b-form-group>
       </div>
       <div
-        class="col col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 d-flex align-items-end justify-content-center"
+        class="col col-12 col-sm-3 col-md-3 col-lg-3 col-xl-3 d-flex align-items-end justify-content-center"
         v-if="_filterOn"
       >
         <b-button
@@ -43,6 +43,16 @@
         >
           KOLON SEÇİMİ
         </b-button>
+      </div>
+      <div class="col col-12 col-sm-3  d-flex align-items-end justify-content-center">
+        <export-excel
+          class   = "btn btn-warning"
+          :data   = "items"
+          :fields = "exportData"
+          worksheet = "Rapor"
+          name    = "export.xls">
+          EXCEL EXPORT
+        </export-excel>
       </div>
       <div
         class="col col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 "
@@ -188,7 +198,15 @@ export default {
   mounted () {
     this.totalRows = this.items.length
   },
-
+  computed: {
+    exportData () {
+      const returnData = {}
+      for (const item of this.headers) {
+        returnData[item.label] = item.key
+      }
+      return returnData
+    }
+  },
   watch: {
     sortDesc (newVal) {
       this.sortDesc = newVal
