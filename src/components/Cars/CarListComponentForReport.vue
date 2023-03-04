@@ -62,7 +62,7 @@
       </div>
       <div class="col col-12 col-md-12 car-list">
         <div v-if="this.cars.length >= 1">
-          <car-list-item  v-for="car in cars" :key="car.imei" :vehicle="car" />
+          <car-list-item  v-for="car in cars" :key="car.imei" :vehicle="car" :show-icon="isFilter"/>
         </div>
         <not-found-data v-if="this.cars.length < 1"/>
       </div>
@@ -174,7 +174,8 @@ export default {
           for (const item of res.data.data) {
             tmpRegion.push({
               phoneNumber: item.name,
-              imei: item.id
+              imei: item.id,
+              id: item.id
             })
           }
           this.cars = tmpRegion

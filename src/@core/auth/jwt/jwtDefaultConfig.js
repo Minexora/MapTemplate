@@ -10,6 +10,7 @@ export default {
   getDeviceData: '/Tracker/GetDeviceData',
   getRegionList: '/Tracker/GetRegionList',
   getDeviceRegionData: '/Tracker/GetDeviceRegionData',
+  getRegionDevicesData: '/Tracker/GetRegionDevicesData',
 
   // This will be prefixed in authorization header with token
   // e.g. Authorization: Bearer <token>

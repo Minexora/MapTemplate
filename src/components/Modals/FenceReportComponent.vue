@@ -33,10 +33,16 @@ export default {
     return {
       headers: [
         {
-          key: 'regionName',
-          label: 'Bölge Adı',
+          key: 'wehName',
+          label: 'Araç Adı',
           sortable: true,
           sortDirection: 'desc'
+        },
+        {
+          key: 'plate',
+          label: 'Plaka',
+          sortable: true,
+          class: 'text-center'
         },
         {
           key: 'entryDate',
@@ -100,13 +106,13 @@ export default {
   },
   mounted () {
     this.$store.commit('sidebar/setFromHistory', true)
-    this.$store.commit('vehicle/set_report_type', 'vehicle')
+    this.$store.commit('vehicle/set_report_type', 'region')
   },
   methods: {
     getVehicleFenceReportData () {
       const date = this.get_history_date_range
       useJwt
-        .post(endpoints.getDeviceRegionData, {
+        .post(endpoints.getRegionDevicesData, {
           endDate: date.end,
           startDate: date.start,
           id: this.get_vehicle_selected_for_report
