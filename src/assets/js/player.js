@@ -188,6 +188,7 @@ class PlayerClass {
     this.__multiplier = 1
     this.onSetFuction({ self: this, event: false })
     this.onShowPoint()
+    this.setControlData({ speed: 0, dist: 0, date: '2023-03-03T00:00:26', tDist: 0 })
   }
 
   onPause () {
