@@ -57,7 +57,7 @@
         />
       </div>
 
-    </template> -->
+    </template>
 
     <template
       v-if="content === 3"

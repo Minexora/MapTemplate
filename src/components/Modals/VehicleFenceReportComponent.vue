@@ -2,7 +2,7 @@
   <div>
     <b-card
       border-variant="warning"
-      header="Tarih Aralığı"
+      header=""
       header-bg-variant="transparent"
       align="center"
     >
@@ -82,10 +82,127 @@ export default {
           class: 'text-center'
         },
         {
-          key: 'fuel_consumption',
-          label: 'Yakıt sarfiyatı',
+          key: 'phoneNumber',
+          label: 'Araç Adı',
+          sortable: true,
+          class: 'text-center'
+        },
+        {
+          key: 'distStart',
+          label: 'İlk Distance',
+          sortable: true,
+          class: 'text-center',
           formatter: (value, key, item) => {
-            if ('fuelRatio' in item && 'distDif' in item) { return (item.fuelRatio * item.distDif).toString() + 'LT' }
+            if ('distStart' in item) { return (item.distStart).toString() + ' ' + 'km' }
+            return 'BOŞ'
+          }
+        },
+        {
+          key: 'distEnd',
+          label: 'Son Distance',
+          sortable: true,
+          class: 'text-center',
+          formatter: (value, key, item) => {
+            if ('distEnd' in item) { return (item.distEnd).toString() + ' ' + 'km' }
+            return 'BOŞ'
+          }
+        },
+        {
+          key: 'distDif',
+          label: 'Toplam Distance',
+          sortable: true,
+          class: 'text-center',
+          formatter: (value, key, item) => {
+            if ('distDif' in item) { return (item.distDif).toString() + ' ' + 'km' }
+            return 'BOŞ'
+          }
+        },
+        {
+          key: 'totalDrvTime',
+          label: 'Toplam Sürüş Süresi',
+          sortable: true,
+          class: 'text-center',
+          formatter: (value, key, item) => {
+            if ('totalDrvTime' in item) { return (item.totalDrvTime).toString() + ' ' + 'dk' }
+            return 'BOŞ'
+          }
+        },
+        {
+          key: 'firstRlnt',
+          label: 'İlk Rolanti',
+          sortable: true,
+          class: 'text-center',
+          formatter: (value, key, item) => {
+            if ('firstRlnt' in item) { return (item.firstRlnt).toString() + ' ' + 'dk' }
+            return 'BOŞ'
+          }
+        },
+        {
+          key: 'totalRlnt',
+          label: 'Ara Rolanti',
+          sortable: true,
+          class: 'text-center',
+          formatter: (value, key, item) => {
+            if ('totalRlnt' in item) { return (item.totalRlnt).toString() + ' ' + 'dk' }
+            return 'BOŞ'
+          }
+        },
+        {
+          key: 'lastRlnt',
+          label: 'Son Rolanti',
+          sortable: true,
+          class: 'text-center',
+          formatter: (value, key, item) => {
+            if ('lastRlnt' in item) { return (item.lastRlnt).toString() + ' ' + 'dk' }
+            return 'BOŞ'
+          }
+        },
+        {
+          key: 'sumRlnt',
+          label: 'Toplam Rolanti',
+          sortable: true,
+          class: 'text-center',
+          formatter: (value, key, item) => {
+            if ('sumRlnt' in item) { return (item.sumRlnt).toString() + ' ' + 'dk' }
+            return 'BOŞ'
+          }
+        },
+        {
+          key: 'fuelRatio',
+          label: 'Yakar Oranı',
+          sortable: true,
+          class: 'text-center',
+          formatter: (value, key, item) => {
+            if ('fuelRatio' in item) { return (item.fuelRatio).toString() + ' ' + 'gal/km' }
+            return 'BOŞ'
+          }
+        },
+        {
+          key: 'fuelRatioR',
+          label: 'Rolanti Sarfiyatı',
+          sortable: true,
+          class: 'text-center',
+          formatter: (value, key, item) => {
+            if ('fuelRatioR' in item) { return (item.fuelRatioR).toString() + ' ' + 'lt/dk' }
+            return 'BOŞ'
+          }
+        },
+        {
+          key: 'fuel_consumption',
+          label: 'Yakıt Sarfiyatı',
+          formatter: (value, key, item) => {
+            if ('fuelRatio' in item && 'distDif' in item) { return (item.fuelRatio * item.distDif).toString() + ' ' + 'gal' }
+            return 'BOŞ'
+          },
+          sortable: true,
+          sortByFormatted: true,
+          filterByFormatted: true
+        },
+        {
+          key: 'rlnt_consumption',
+          label: 'Rolanti Sarfiyatı',
+          formatter: (value, key, item) => {
+            if ('fuelRatioR' in item && 'sumRlnt' in item) { return (item.fuelRatioR * item.sumRlnt).toString() + ' ' + 'lt' }
             return 'BOŞ'
           },
           sortable: true,

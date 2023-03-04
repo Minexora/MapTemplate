@@ -6,7 +6,7 @@
         v-if="_filter"
       >
         <b-form-group
-          label="Filter"
+          label="Arama Filtresi"
           label-for="filter-input"
           label-cols-sm="3"
           label-align-sm="right"
@@ -25,7 +25,7 @@
               <b-button
                 :disabled="!filter"
                 @click="filter = ''"
-              >Clear</b-button>
+              >Temizle</b-button>
             </b-input-group-append>
           </b-input-group>
         </b-form-group>
@@ -41,7 +41,7 @@
           aria-controls="collapse-4"
           @click="visible = !visible"
         >
-          Tablo Kolonları
+          KOLON SEÇİMİ
         </b-button>
       </div>
       <div
@@ -79,8 +79,8 @@
       >
         <b-card>
           <b-form-group
-            label="Tablo kolonları"
-            description="Tabloda listelenmesini istediğiniz seçiniz"
+            label="TABLODA LİSTELENECEK KOLONLARI SEÇEBİLİRSİNİZ..."
+            description=""
             label-cols-sm="3"
             label-align-sm="right"
             label-size="sm"

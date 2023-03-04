@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve1": "vue-cli-service serve --host 116.202.113.209 --port 4203",
+    "serve1": "vue-cli-service serve --host 157.90.93.133 --port 4203",
     "serve": "vue-cli-service serve --port 4203",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",

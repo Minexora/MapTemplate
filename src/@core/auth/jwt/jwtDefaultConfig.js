@@ -5,7 +5,7 @@ export default {
   logoutEndpoint: '/jwt/logout',
   checkTokenEndpoint: '',
   getDevicesOnline2: '/Tracker/GetDevicesOnline2',
-  getVehicleDistanceReport: 'Tracker/GetDiffDistsExp',
+  getVehicleDistanceReport: 'Tracker/GetDiffDistsExp2',
   GetDeviceDataForLastTenMinutes: '/Tracker/GetDeviceDataForLastTenMinutes',
 
   // This will be prefixed in authorization header with token
