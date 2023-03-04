@@ -9,7 +9,8 @@ const permGroups = {
 }
 
 const Groups = {
-  0: 'admin'
+  0: 'admin',
+  1: 'admin'
 }
 
 export {

@@ -19,8 +19,7 @@ export const checkPerm = (perms) => {
     const userData = getUserData()
     const userGroup = Groups[userData.data.userType]
     permGroups[userGroup].includes(perms)
-    // return permGroups[userGroup].includes(perms)
-    return true
+    return permGroups[userGroup].includes(perms)
   } catch (err) {
     // console.log('Error Perms: ', err)
     return false
