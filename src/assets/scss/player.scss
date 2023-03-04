@@ -8,7 +8,7 @@ body{
         transform: translate(-50%, 0%);
         z-index: 401;
         width: calc(100% - 30px);
-        max-width: 880px;
+        max-width: 905px;
         height: auto;
         padding: 10px;
         border-radius: 15px;
@@ -83,6 +83,23 @@ body{
                 max-width: 35px;
                 width: auto;
                 margin: 0 2.5px;
+            }
+
+            .descriptions {
+                color:rgba(255,255,255,1) !important;
+                display: flex;
+                margin: 5px;
+                padding-left: 10px;
+
+                .title {
+                    font-weight: bold;
+                    color: rgb(247, 230, 5) !important;
+                }
+                
+                .value {
+                    padding-left: 10px;
+                    padding-right: 10px;
+                }
             }
         }
     }

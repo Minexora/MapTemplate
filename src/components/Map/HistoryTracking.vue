@@ -38,10 +38,16 @@ export default {
       if ('imei' in this.historyTracking) {
         this.container.style.visibility = 'visible'
         this.container.innerHTML = ''
+
+        const maxLength = this.historyTracking.coordinates.length - 1
+        const maxDist = this.historyTracking.coordinates[maxLength].distance
+        const diffDist = maxDist - this.historyTracking.coordinates[0].distance
+
         const player = new Player({
           max: this.getMaxSpeed(),
           timeLineHeight: 40,
           playbackSpeed: 1000,
+          currentDistance: diffDist,
           showFunc: this.showVehicleOnMap,
           funcSelf: {
             waipoint: { imei: this.historyTracking.imei, color: this.historyTracking.color, points: [] },
@@ -60,8 +66,18 @@ export default {
             }
           }
         })
+
         for (const [index, value] of this.historyTracking.coordinates.entries()) {
-          player.createTimeItem({ id: index, obj: value, current: value.speed, onClick: this.timeLineItemClick })
+          let _warning = false
+          let _danger = true
+          if (value.insidePolygon) {
+            _warning = true
+            _danger = value.speed > 90
+          } else {
+            _warning = false
+            _danger = false
+          }
+          player.createTimeItem({ id: index, obj: value, current: value.speed, warning: _warning, danger: _danger, onClick: this.timeLineItemClick })
         }
       }
     },
@@ -70,6 +86,7 @@ export default {
     },
     showVehicleOnMap (self, obj) {
       const waipoint = self.waipoint
+      waipoint.points = []
       const marker = self.marker
       obj.forEach(element => {
         waipoint.points.push([element.lat, element.lng])

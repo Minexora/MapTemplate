@@ -13,6 +13,7 @@ class PlayerClass {
   __multiplier = 1
   __showFunc = null
   __funcSelf = null
+  __currentDistance = null
   __multipliers = {
     '-5X': 5000,
     '-4X': 4000,
@@ -25,7 +26,7 @@ class PlayerClass {
     '5X': 200
   }
 
-  constructor ({ max, timeLineHeight = 20, progressUpDownCount = 5, playbackSpeed = 1000, showFunc = null, funcSelf = null }) {
+  constructor ({ max, timeLineHeight = 20, progressUpDownCount = 5, currentDistance = 0, playbackSpeed = 1000, showFunc = null, funcSelf = null }) {
     this.__maxValue = max
     this.__timeLineHeight = timeLineHeight
     this.__items = []
@@ -34,6 +35,8 @@ class PlayerClass {
     this.__playbackSpeed = playbackSpeed
     this.__showFunc = showFunc
     this.__funcSelf = funcSelf
+    this.__currentDistance = currentDistance
+    console.log(currentDistance)
 
     // History Tracking Container
     const container = document.querySelector('#historyTracking')
@@ -91,7 +94,32 @@ class PlayerClass {
     rebootIcon.addEventListener('click', () => this.onReset(this))
     controls.appendChild(rebootIcon)
 
+    // Date Time
+    const dateTimeDiv = document.createElement('div')
+    dateTimeDiv.className = 'descriptions'
+    dateTimeDiv.innerHTML = `<div class='title'>Date:</div><div class='value date'>${this.__currentDate}</div>`
+    controls.appendChild(dateTimeDiv)
+
+    // Current Distance Time
+    const distanceDiv = document.createElement('div')
+    distanceDiv.className = 'descriptions'
+    distanceDiv.innerHTML = `<div class='title'>Dist:</div><div class='value dist'>${this.__currentDate}</div>`
+    controls.appendChild(distanceDiv)
+
+    // Speed Time
+    const speedDiv = document.createElement('div')
+    speedDiv.className = 'descriptions'
+    speedDiv.innerHTML = `<div class='title'>Speed:</div><div class='value speed'>${this.__currentSpeed}</div>`
+    controls.appendChild(speedDiv)
+
+    // Total Disctance Time
+    const totalDistanceDiv = document.createElement('div')
+    totalDistanceDiv.className = 'descriptions'
+    totalDistanceDiv.innerHTML = `<div class='title'>T.Dist:</div><div class='value t_dist'>${this.__distance}</div>`
+    controls.appendChild(totalDistanceDiv)
+
     container.appendChild(controls)
+    this.setControlData({ speed: 0, dist: 0, date: '2023-03-03T00:00:26', tDist: Math.round(currentDistance) })
   }
 
   createTimeItem ({ id, obj = {}, current = 0, warning = false, danger = false, onClick = null }) {
@@ -174,6 +202,20 @@ class PlayerClass {
     return this.__multipliers[`${this.__multiplier}X`]
   }
 
+  setControlData ({ speed, dist, date, tDist }) {
+    const speedDiv = document.querySelector('.player_container .controls .descriptions .speed')
+    speedDiv.innerText = speed
+
+    const distDiv = document.querySelector('.player_container .controls .descriptions .dist')
+    distDiv.innerText = dist + 'KM'
+
+    const dateDiv = document.querySelector('.player_container .controls .descriptions .date')
+    dateDiv.innerText = date.split('T').join(' ')
+
+    const tDistDiv = document.querySelector('.player_container .controls .descriptions .t_dist')
+    tDistDiv.innerText = tDist + 'KM'
+  }
+
   onPlaybackSpeedDecrease (self) {
     if (self.__multiplier > -5) self.__multiplier -= 1
     self.__playbackSpeed = `${self.__multiplier}X` in self.__multipliers ? self.__multipliers[`${self.__multiplier}X`] : self.findSpeed('dec')
@@ -205,6 +247,7 @@ class PlayerClass {
     if (beforeActiveDiv) beforeActiveDiv.classList.remove('active')
     const activeDiv = this.__timeLine.querySelector(`div.time_item#item_${this.__currentPoint}`)
     activeDiv.className += ' active'
+    this.setControlData({ date: this.__items[this.__currentPoint].entryDate, speed: Math.round(this.__items[this.__currentPoint].speed), dist: Math.round(this.__items[this.__currentPoint].distance), tDist: Math.round(this.__currentDistance) })
     this.__showFunc(this.__funcSelf, this.__items.slice(0, this.__currentPoint === 0 ? 1 : this.__currentPoint))
   }
 }
