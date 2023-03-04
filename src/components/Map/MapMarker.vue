@@ -205,14 +205,14 @@ export default {
   width: 36px !important;
   margin-top: -1px !important;
   position: relative;
-  left: -83px;
+  left: -120px;
 }
 .markerInfo{
   position: absolute;
-    left: -120px;
+    left: -150px;
     top: -42px;
     background-color: rgba(47, 64, 80, 0.9) !important;
-    width: 250px;
+    width: 300px;
     height: 40px;
     padding: 5px;
 }
@@ -221,8 +221,8 @@ export default {
   position: absolute;
   top: 10px;
   font-size: 15px;
-  left: 76px;
-  max-width: 200px;
+  left: 60px;
+  max-width: 250px;
 }
 
 </style>

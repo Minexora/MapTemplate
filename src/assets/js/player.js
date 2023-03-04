@@ -205,16 +205,16 @@ class PlayerClass {
 
   setControlData ({ speed, dist, date, tDist }) {
     const speedDiv = document.querySelector('.player_container .controls .descriptions .speed')
-    speedDiv.innerText = speed
+    speedDiv.innerText = speed + 'Km/h'
 
     const distDiv = document.querySelector('.player_container .controls .descriptions .dist')
-    distDiv.innerText = dist + 'KM'
+    distDiv.innerText = dist + 'Km'
 
     const dateDiv = document.querySelector('.player_container .controls .descriptions .date')
     dateDiv.innerText = date.split('T').join(' ')
 
     const tDistDiv = document.querySelector('.player_container .controls .descriptions .t_dist')
-    tDistDiv.innerText = tDist + 'KM'
+    tDistDiv.innerText = tDist + 'Km'
   }
 
   onPlaybackSpeedDecrease (self) {
