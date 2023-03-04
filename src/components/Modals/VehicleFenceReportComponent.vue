@@ -126,7 +126,6 @@ export default {
       this.showTimeRangePanel = false
     },
     getVehicleFenceReportData (data) {
-      debugger
       useJwt
         .post(endpoints.getVehicleDistanceReport, {
           endDate: data[1],

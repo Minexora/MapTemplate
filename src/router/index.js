@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 import LoginView from '@/views/LoginView.vue'
+import HistoryView from '@/views/HistoryView.vue'
 import { isUserLoggedIn, checkPerm } from '@/auth/utils'
 
 Vue.use(VueRouter)
@@ -16,6 +17,11 @@ const routes = [
     path: '/login',
     name: 'login',
     component: LoginView
+  },
+  {
+    path: '/history',
+    name: 'history',
+    component: HistoryView
   },
   {
     path: '/error-404',
