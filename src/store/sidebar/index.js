@@ -4,7 +4,8 @@ export default {
     isShow: false,
     title: '',
     content: 1,
-    position: 'left'
+    position: 'left',
+    fromHistory: false
 
   },
   getters: {
@@ -15,6 +16,9 @@ export default {
         content: state.content,
         position: state.position
       }
+    },
+    getFromHistory (state) {
+      return state.fromHistory
     }
   },
   mutations: {
@@ -23,6 +27,9 @@ export default {
       state.title = val.title
       state.content = val.content
       state.position = val.position
+    },
+    setFromHistory (state, val) {
+      state.fromHistory = val
     }
   },
   actions: {

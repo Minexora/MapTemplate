@@ -1,50 +1,75 @@
 <template>
-  <div class="car-list-component">
-    <div class="col col-12 col-md-12 car-list-filter-form">
-      <div class="col col-12 col-md-12">
-        <b-form>
-          <div class="row m-0 p-2">
-            <div class="col col-12 col-md-6">
-              <b-form-group
-                id="input-group-1"
-                label-for="input-1"
-              >
-                <b-form-input
-                  id="input-1"
-                  v-model="filter_vehicle"
-                  type="text"
-                  placeholder="Plaka / Imei Giriniz"
-                ></b-form-input>
-              </b-form-group>
-            </div>
-
-            <div class="col col-12 col-md-6">
-              <b-form-group
-                id="input-group-2"
-                label-for="input-2"
-              >
-                <b-form-select
-                id="input-3"
-                class="select_vehicle_type"
-                placeholder="Araç Tipini Seçiniz"
-                v-model="selected_vehicle_type"
-                :options="select_vehicle_type_option"></b-form-select
-                >
-              </b-form-group>
-            </div>
-          </div>
-        </b-form>
-      </div>
-      <div class="col col-12 col-md-12  all_select_car my-2">
-        <input class="form-check-input" v-model="all_selected" type="checkbox" value="" id="allSelectCars">
-        <label class="form-check-label mx-2" for="allSelectCars">Tüm Araçları Göster</label>
-      </div>
+  <div>
+    <div class="col col-12" v-if="getFromHistory">
+      <date-picker
+        v-model="date"
+        type="datetime"
+        :format="dateTimeOptions.format"
+        :title-format="dateTimeOptions.format"
+        placeholder="Tarih Aralığı Seçiniz."
+        :range="dateTimeOptions.range"
+        :show-time-panel="dateTimeOptions.showTimeRangePanel"
+        @close="handleRangeClose"
+        :clearable="dateTimeOptions.clearable"
+        :value-type="dateTimeOptions.value_type"
+      >
+        <template v-slot:footer>
+          <button
+            class="mx-btn mx-btn-text"
+            @click="toggleTimeRangePanel"
+          >
+            {{ dateTimeOptions.showTimeRangePanel ? 'select date' : 'select time' }}
+          </button>
+        </template>
+      </date-picker>
     </div>
-    <div class="col col-12 col-md-12 car-list">
-      <div v-if="this.cars.length >= 1">
-        <car-list-item  v-for="car in cars" :key="car.imei" :vehicle="car"  :allSelect="all_selected" @selectedCar="select_car"  @unselectedCar="unselect_car" />
+    <div class="car-list-component">
+      <div class="col col-12 col-md-12 car-list-filter-form">
+        <div class="col col-12 col-md-12">
+          <b-form>
+            <div class="row m-0 p-2">
+              <div class="col col-12 col-md-6">
+                <b-form-group
+                  id="input-group-1"
+                  label-for="input-1"
+                >
+                  <b-form-input
+                    id="input-1"
+                    v-model="filter_vehicle"
+                    type="text"
+                    placeholder="Plaka / Imei Giriniz"
+                  ></b-form-input>
+                </b-form-group>
+              </div>
+
+              <div class="col col-12 col-md-6">
+                <b-form-group
+                  id="input-group-2"
+                  label-for="input-2"
+                >
+                  <b-form-select
+                  id="input-3"
+                  class="select_vehicle_type"
+                  placeholder="Araç Tipini Seçiniz"
+                  v-model="selected_vehicle_type"
+                  :options="select_vehicle_type_option"></b-form-select
+                  >
+                </b-form-group>
+              </div>
+            </div>
+          </b-form>
+        </div>
+        <div class="col col-12 col-md-12  all_select_car my-2">
+          <input class="form-check-input" v-model="all_selected" type="checkbox" value="" id="allSelectCars">
+          <label class="form-check-label mx-2" for="allSelectCars">Tüm Araçları Göster</label>
+        </div>
       </div>
-      <not-found-data v-if="this.cars.length < 1"/>
+      <div class="col col-12 col-md-12 car-list">
+        <div v-if="this.cars.length >= 1">
+          <car-list-item  v-for="car in cars" :key="car.imei" :vehicle="car"  :allSelect="all_selected" @selectedCar="select_car"  @unselectedCar="unselect_car" />
+        </div>
+        <not-found-data v-if="this.cars.length < 1"/>
+      </div>
     </div>
   </div>
 </template>
@@ -52,6 +77,7 @@
 <script>
 import CarListItemComponent from '@/components/Cars/CarListItemComponent.vue'
 import NotFoundDataComponent from '@/components/NotFoundDataComponent.vue'
+import DatePicker from 'vue2-datepicker'
 import useJwt from '@/auth/jwt/useJwt'
 import endpoints from '@/@core/auth/jwt/jwtDefaultConfig'
 export default {
@@ -60,7 +86,8 @@ export default {
     // eslint-disable-next-line vue/no-unused-components
     'car-list-item': CarListItemComponent,
     // eslint-disable-next-line vue/no-unused-components
-    'not-found-data': NotFoundDataComponent
+    'not-found-data': NotFoundDataComponent,
+    DatePicker
   },
   data () {
     return {
@@ -70,7 +97,16 @@ export default {
       selected_vehicle_type: '',
       filter_vehicle: '',
       all_selected: false,
-      intervals: {}
+      intervals: {},
+      date: [],
+      dateTimeOptions: {
+        showTimePanel: false,
+        showTimeRangePanel: false,
+        range: true,
+        format: 'YYYY-MM-DD HH:mm:ss',
+        clearable: true,
+        value_type: 'format'
+      }
     }
   },
   created () {
@@ -85,6 +121,9 @@ export default {
     },
     get_intervals () {
       return this.$store.getters['vehicle/get_intervals']
+    },
+    getFromHistory () {
+      return this.$store.getters['sidebar/getFromHistory']
     }
   },
   watch: {
@@ -112,6 +151,9 @@ export default {
     },
     get_intervals (newVal) {
       this.intervals = newVal
+    },
+    date (newVal) {
+      this.$store.commit('vehicle/set_history_date_range', { end: newVal[1], start: newVal[0] })
     }
   },
   methods: {
@@ -153,6 +195,13 @@ export default {
       delete result[imei]
       localStorage.setItem(endpoints.vehicleTimes, JSON.stringify(vehicleTimes, null, 2))
       localStorage.setItem(endpoints.resultTimes, JSON.stringify(result, null, 2))
+    },
+    toggleTimeRangePanel () {
+      this.dateTimeOptions.showTimeRangePanel =
+        !this.dateTimeOptions.showTimeRangePanel
+    },
+    handleRangeClose () {
+      this.showTimeRangePanel = false
     }
   }
 }

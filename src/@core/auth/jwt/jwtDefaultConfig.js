@@ -7,6 +7,7 @@ export default {
   getDevicesOnline2: '/Tracker/GetDevicesOnline2',
   getVehicleDistanceReport: 'Tracker/GetDiffDistsExp2',
   GetDeviceDataForLastTenMinutes: '/Tracker/GetDeviceDataForLastTenMinutes',
+  getDeviceData: '/Tracker/GetDeviceData',
 
   // This will be prefixed in authorization header with token
   // e.g. Authorization: Bearer <token>

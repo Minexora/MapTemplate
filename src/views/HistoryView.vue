@@ -2,6 +2,7 @@
   <div>
     <Map :center="map_center" :locations="map_locations" :waypoints="waypoints" :showMap="showMap" :zoom="map_zoom" />
     <b-sidebar />
+    <l-history-tracking :historyTracking="show_waypoints"/>
   </div>
 </template>
 
@@ -11,11 +12,13 @@ import Sidebar from '@/components/Sidebar/SideComponent.vue'
 import { latLng } from 'leaflet'
 import useJwt from '@/auth/jwt/useJwt'
 import endpoints from '@/@core/auth/jwt/jwtDefaultConfig'
+import HistoryTracking from '@/components/Map/HistoryTracking.vue'
 export default {
   name: 'HomeView',
   components: {
     // eslint-disable-next-line vue/no-unused-components
     Map,
+    'l-history-tracking': HistoryTracking,
     'b-sidebar': Sidebar
   },
   data () {
@@ -55,12 +58,13 @@ export default {
       },
       map_locations: [],
       showMap: true,
-      intervals: {},
-      waypoints: []
+      waypoints: [],
+      show_waypoints: {},
+      isOneTry: true
     }
   },
   mounted () {
-    this.$store.commit('sidebar/setFromHistory', false)
+    this.$store.commit('sidebar/setFromHistory', true)
   },
   computed: {
     getShowVehicle () {
@@ -68,6 +72,9 @@ export default {
     },
     getWayPoints () {
       return this.$store.getters['vehicle/get_waypoints']
+    },
+    getHistoryDate () {
+      return this.$store.getters['vehicle/get_history_date_range']
     }
   },
   watch: {
@@ -75,7 +82,7 @@ export default {
       this.getVehicles(newVal)
     },
     getWayPoints (newVal) {
-      this.waypoints = newVal
+      this.waypoints = typeof newVal === 'object' ? [newVal] : newVal
     }
   },
   methods: {
@@ -92,7 +99,10 @@ export default {
       }
       for (const vehicle of vehicles) {
         if (vehicle.isPlay) {
-          this.playVehicleWayPointsShow(vehicle)
+          if (this.isOneTry) {
+            this.playVehicleWayPointsShow(vehicle)
+            this.isOneTry = false
+          }
           this.defaultVehicleShow(vehicle)
         } else {
           this.defaultVehicleShow(vehicle)
@@ -144,47 +154,19 @@ export default {
       }
     },
     intervalClear (vehicle) {
-      clearInterval(this.intervals[vehicle.imei])
-      delete this.intervals[vehicle.imei]
+      this.isOneTry = true
       this.$store.commit('vehicle/remove_way_points', vehicle.imei)
-      this.$store.commit('vehicle/set_intervals', this.intervals)
     },
     playVehicleWayPointsShow (vehicle) {
-      if (!(vehicle.imei in this.intervals)) {
-        this.intervals[vehicle.imei] = setInterval(() => {
-          useJwt.post(endpoints.GetDeviceDataForLastTenMinutes, { Id: vehicle.id }).then((res) => {
-          // eslint-disable-next-line prefer-const
-            let tmpwaypoints = this.$store.getters['vehicle/get_waypoints']
-            // eslint-disable-next-line prefer-const
-            let tmpvehicle = tmpwaypoints.find(item => item.imei === vehicle.imei)
-            tmpwaypoints = tmpwaypoints.filter(item => item.imei !== vehicle.imei)
-            if (!tmpvehicle) tmpvehicle = { imei: vehicle.imei, color: res?.data?.data?.markerColors, points: [] }
-            res?.data?.data?.coordinates.forEach(item => {
-              const tmppoint = [item.lat, item.lng]
-              if (!tmpvehicle.points.find(item => item[0] === tmppoint[0] && item[1] === tmppoint[1])) {
-                tmpvehicle.points.push(tmppoint)
-              }
-              const vehicleLastLocation = {
-                location: {
-                  lat: tmppoint[0],
-                  lng: tmppoint[1]
-                },
-                rotation: item.rotation,
-                speed: item.speed,
-                distance: item.distance,
-                imei: vehicle.imei,
-                insidePolygon: item.insidePolygon,
-                ignition: item.batteryPercent,
-                date: res?.data?.data?.lastData
-              }
-              this.$store.commit('vehicle/set_last_location', vehicleLastLocation)
-            })
-            tmpwaypoints.push(tmpvehicle)
-            this.$store.commit('vehicle/set_way_points', tmpwaypoints)
-          })
-        }, 3000)
-        this.$store.commit('vehicle/set_intervals', this.intervals)
-      }
+      const history = this.getHistoryDate
+
+      useJwt.post(endpoints.getDeviceData, {
+        Id: vehicle.id,
+        EndDate: history.end,
+        StartDate: history.start
+      }).then((res) => {
+        this.show_waypoints = { imei: vehicle.imei, color: '#3cd6e7', date: res?.data?.data?.lastData, coordinates: res?.data?.data?.coordinates }
+      })
     },
     getIcons (vehicle) {
       const icons = this.$store.getters['vehicle/get_vehicleTypesIcon']

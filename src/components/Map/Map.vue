@@ -30,6 +30,7 @@
 import { LMap, LTileLayer, LPolyline } from 'vue2-leaflet'
 import MapMarker from '@/components/Map/MapMarker.vue'
 import MapControl from '@/components/Map/MapControl.vue'
+
 import jwtDefaultConfig from '@/@core/auth/jwt/jwtDefaultConfig'
 // import RoutingMachine from '@/components/Map/RoutingMachine.vue'
 
@@ -41,7 +42,6 @@ export default {
     'l-marker': MapMarker,
     // eslint-disable-next-line vue/no-unused-components
     'l-control': MapControl,
-
     // eslint-disable-next-line vue/no-unused-components
     // 'l-routing-machine': RoutingMachine
 
@@ -87,7 +87,6 @@ export default {
 
   },
   watch: {
-
   },
   data () {
     return {

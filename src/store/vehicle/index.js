@@ -62,7 +62,11 @@ export default {
     show_vehicles: [],
     waypoints: [],
     vehicles: [],
-    intervals: []
+    intervals: [],
+    history_date_range: {
+      end: null,
+      start: null
+    }
   },
   getters: {
     get_vehicleTypes (state) {
@@ -88,6 +92,9 @@ export default {
     },
     get_intervals (state) {
       return state.intervals
+    },
+    get_history_date_range (state) {
+      return state.history_date_range
     }
   },
   mutations: {
@@ -120,6 +127,10 @@ export default {
     },
     remove_way_points (state, imei) {
       state.waypoints = state.waypoints.filter(item => item.imei !== imei)
+    },
+    set_history_date_range (state, val) {
+      state.history_date_range.end = val.end
+      state.history_date_range.start = val.start
     }
   }
 }
