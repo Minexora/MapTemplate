@@ -66,7 +66,10 @@ export default {
     history_date_range: {
       end: null,
       start: null
-    }
+    },
+    vehicle_list_for_report: [],
+    vehicle_selected_for_report: null,
+    report_type: null
   },
   getters: {
     get_vehicleTypes (state) {
@@ -95,6 +98,15 @@ export default {
     },
     get_history_date_range (state) {
       return state.history_date_range
+    },
+    get_vehicle_list_for_report (state) {
+      return state.vehicle_list_for_report
+    },
+    get_vehicle_selected_for_report (state) {
+      return state.vehicle_selected_for_report
+    },
+    get_report_type (state) {
+      return state.report_type
     }
   },
   mutations: {
@@ -131,6 +143,15 @@ export default {
     set_history_date_range (state, val) {
       state.history_date_range.end = val.end
       state.history_date_range.start = val.start
+    },
+    set_vehicle_list_for_report (state, val) {
+      state.vehicle_list_for_report = val
+    },
+    set_vehicle_selected_for_report (state, val) {
+      state.vehicle_selected_for_report = val
+    },
+    set_report_type (state, val) {
+      state.report_type = val
     }
   }
 }

@@ -1,252 +1,115 @@
 <template>
   <div>
-    <b-card
-      border-variant="warning"
-      header=""
-      header-bg-variant="transparent"
-      align="center"
-    >
-      <b-card-text>
+    <b-row>
+      <b-col class="col col-12 col-md-6 col-lg-5 col-xl-4">
+        <car-list-component-for-report />
+      </b-col>
 
-        <label
-          class="pe-3"
-          for="date_picker"
-        >Tarih Aralığı: </label>
-
-        <date-picker
-          v-model="date"
-          type="datetime"
-          :format="dateTimeOptions.format"
-          :title-format="dateTimeOptions.format"
-          placeholder="Tarih Aralığı Seçiniz."
-          :range="dateTimeOptions.range"
-          :show-time-panel="dateTimeOptions.showTimeRangePanel"
-          @close="handleRangeClose"
-          :clearable="dateTimeOptions.clearable"
-          :value-type="dateTimeOptions.value_type"
-        >
-          <template v-slot:footer>
-            <button
-              class="mx-btn mx-btn-text"
-              @click="toggleTimeRangePanel"
-            >
-              {{ dateTimeOptions.showTimeRangePanel ? 'select date' : 'select time' }}
-            </button>
-          </template>
-        </date-picker>
-
-      </b-card-text>
-    </b-card>
-    <main-table-component
-      :fields="headers"
-      :items="items"
-    />
+      <b-col class="col col-12 col-md-6 col-lg-7 col-xl-8">
+        <main-table-component :fields="headers" :items="items" />
+      </b-col>
+    </b-row>
   </div>
 </template>
 
 <script>
 import MainTableComponent from '@/components/Tables/MainTableComponent.vue'
+import CarListComponentForReport from '@/components/Cars/CarListComponentForReport.vue'
 import endpoints from '@/@core/auth/jwt/jwtDefaultConfig'
 import DatePicker from 'vue2-datepicker'
 import useJwt from '@/auth/jwt/useJwt'
 import 'vue2-datepicker/locale/tr'
+import moment from 'moment'
 
 export default {
   name: 'VehicleFenceReportComponent',
   components: {
+    /* eslint-disable vue/no-unused-components */
+    DatePicker,
     MainTableComponent,
-    DatePicker
+    CarListComponentForReport
   },
   data () {
     return {
-      date: [],
-      dateTimeOptions: {
-        showTimePanel: false,
-        showTimeRangePanel: false,
-        range: true,
-        format: 'YYYY-MM-DD HH:mm:ss',
-        clearable: true,
-        value_type: 'format'
-      },
       headers: [
         {
-          key: 'id',
-          label: 'Cihaz Id',
+          key: 'regionName',
+          label: 'Bölge Adı',
           sortable: true,
           sortDirection: 'desc'
         },
         {
-          key: 'plate',
-          label: 'Plaka',
-          sortable: true,
-          class: 'text-center'
-        },
-        {
-          key: 'phoneNumber',
-          label: 'Araç Adı',
-          sortable: true,
-          class: 'text-center'
-        },
-        {
-          key: 'distStart',
-          label: 'İlk Distance',
+          key: 'entryDate',
+          label: 'Giriş Zamanı',
           sortable: true,
           class: 'text-center',
           formatter: (value, key, item) => {
-            if ('distStart' in item) { return (item.distStart).toString() + ' ' + 'km' }
+            if ('entryDate' in item) { return moment(String(item.entryDate)).format('DD/MM/YYYY HH:mm') }
             return 'BOŞ'
           }
         },
         {
-          key: 'distEnd',
-          label: 'Son Distance',
+          key: 'exitDate',
+          label: 'Çıkış Zamanı',
           sortable: true,
           class: 'text-center',
           formatter: (value, key, item) => {
-            if ('distEnd' in item) { return (item.distEnd).toString() + ' ' + 'km' }
+            if ('exitDate' in item) { return moment(String(item.exitDate)).format('DD/MM/YYYY HH:mm') }
             return 'BOŞ'
           }
         },
         {
-          key: 'distDif',
-          label: 'Toplam Distance',
+          key: 'minutes',
+          label: 'Bölgede Geçen Süre (Dk.)',
           sortable: true,
           class: 'text-center',
           formatter: (value, key, item) => {
-            if ('distDif' in item) { return (item.distDif).toString() + ' ' + 'km' }
+            if ('minutes' in item) { return (item.minutes).toString() + ' ' + 'DK' }
             return 'BOŞ'
           }
         },
         {
-          key: 'totalDrvTime',
-          label: 'Toplam Sürüş Süresi',
+          key: 'distance',
+          label: 'Giriş KM',
           sortable: true,
           class: 'text-center',
           formatter: (value, key, item) => {
-            if ('totalDrvTime' in item) { return (item.totalDrvTime).toString() + ' ' + 'dk' }
+            if ('distance' in item) { return Math.round(item.distance) + ' ' + 'KM' }
             return 'BOŞ'
           }
-        },
-        {
-          key: 'firstRlnt',
-          label: 'İlk Rolanti',
-          sortable: true,
-          class: 'text-center',
-          formatter: (value, key, item) => {
-            if ('firstRlnt' in item) { return (item.firstRlnt).toString() + ' ' + 'dk' }
-            return 'BOŞ'
-          }
-        },
-        {
-          key: 'totalRlnt',
-          label: 'Ara Rolanti',
-          sortable: true,
-          class: 'text-center',
-          formatter: (value, key, item) => {
-            if ('totalRlnt' in item) { return (item.totalRlnt).toString() + ' ' + 'dk' }
-            return 'BOŞ'
-          }
-        },
-        {
-          key: 'lastRlnt',
-          label: 'Son Rolanti',
-          sortable: true,
-          class: 'text-center',
-          formatter: (value, key, item) => {
-            if ('lastRlnt' in item) { return (item.lastRlnt).toString() + ' ' + 'dk' }
-            return 'BOŞ'
-          }
-        },
-        {
-          key: 'sumRlnt',
-          label: 'Toplam Rolanti',
-          sortable: true,
-          class: 'text-center',
-          formatter: (value, key, item) => {
-            if ('sumRlnt' in item) { return (item.sumRlnt).toString() + ' ' + 'dk' }
-            return 'BOŞ'
-          }
-        },
-        {
-          key: 'fuelRatio',
-          label: 'Yakar Oranı',
-          sortable: true,
-          class: 'text-center',
-          formatter: (value, key, item) => {
-            if ('fuelRatio' in item) { return (item.fuelRatio).toString() + ' ' + 'gal/km' }
-            return 'BOŞ'
-          }
-        },
-        {
-          key: 'fuelRatioR',
-          label: 'Rolanti Sarfiyatı',
-          sortable: true,
-          class: 'text-center',
-          formatter: (value, key, item) => {
-            if ('fuelRatioR' in item) { return (item.fuelRatioR).toString() + ' ' + 'lt/dk' }
-            return 'BOŞ'
-          }
-        },
-        {
-          key: 'fuel_consumption',
-          label: 'Yakıt Sarfiyatı',
-          formatter: (value, key, item) => {
-            if ('fuelRatio' in item && 'distDif' in item) { return (item.fuelRatio * item.distDif).toString() + ' ' + 'gal' }
-            return 'BOŞ'
-          },
-          sortable: true,
-          sortByFormatted: true,
-          filterByFormatted: true
-        },
-        {
-          key: 'rlnt_consumption',
-          label: 'Rolanti Sarfiyatı',
-          formatter: (value, key, item) => {
-            if ('fuelRatioR' in item && 'sumRlnt' in item) { return (item.fuelRatioR * item.sumRlnt).toString() + ' ' + 'lt' }
-            return 'BOŞ'
-          },
-          sortable: true,
-          sortByFormatted: true,
-          filterByFormatted: true
         }
       ],
-      items: [
-        {
-          id: 34,
-          phoneNumber: '06-L432820-PICKUP',
-          plate: 'L432820'
-        },
-        {
-          id: 39,
-          phoneNumber: '42-L383844-PICKUP',
-          plate: 'L383844'
-        },
-        {
-          id: 75,
-          phoneNumber: 'A935581-VERNA',
-          plate: 'A935581'
-        }
-      ]
+      items: []
+    }
+  },
+  computed: {
+    get_vehicle_selected_for_report () {
+      return this.$store.getters['vehicle/get_vehicle_selected_for_report']
+    },
+    get_history_date_range () {
+      return this.$store.getters['vehicle/get_history_date_range']
     }
   },
   watch: {
-    date (newVal) {
-      this.getVehicleFenceReportData(newVal)
+    get_history_date_range () {
+      this.getVehicleFenceReportData()
+    },
+    get_vehicle_selected_for_report () {
+      this.getVehicleFenceReportData()
     }
   },
+  mounted () {
+    this.$store.commit('sidebar/setFromHistory', true)
+    this.$store.commit('vehicle/set_report_type', 'vehicle')
+  },
   methods: {
-    toggleTimeRangePanel () {
-      this.dateTimeOptions.showTimeRangePanel =
-        !this.dateTimeOptions.showTimeRangePanel
-    },
-    handleRangeClose () {
-      this.showTimeRangePanel = false
-    },
-    getVehicleFenceReportData (data) {
+    getVehicleFenceReportData () {
+      const date = this.get_history_date_range
       useJwt
-        .post(endpoints.getVehicleDistanceReport, {
-          endDate: data[1],
-          startDate: data[0]
+        .post(endpoints.getDeviceRegionData, {
+          endDate: date.end,
+          startDate: date.start,
+          id: this.get_vehicle_selected_for_report
         })
         .then((res) => {
           this.items = res.data.data
@@ -256,5 +119,4 @@ export default {
 }
 </script>
 
-<style>
-</style>
+<style></style>

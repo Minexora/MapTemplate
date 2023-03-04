@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import { Icon } from 'leaflet'
 import VueCrontab from 'vue-crontab'
+import excel from 'vue-excel-export'
 import { BootstrapVue, IconsPlugin, ModalPlugin, ToastPlugin, BootstrapVueIcons } from 'bootstrap-vue'
 
 Vue.use(VueCrontab)
@@ -9,6 +10,7 @@ Vue.use(ModalPlugin)
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 Vue.use(BootstrapVueIcons)
+Vue.use(excel)
 
 delete Icon.Default.prototype._getIconUrl
 Icon.Default.mergeOptions({

@@ -165,7 +165,7 @@ export default {
     getİcon (icon = 'stop') {
       return L.divIcon({
         className: 'my-custom-pin',
-        html: `${this.createSvg(icon, this.iconColor.color)} <img src="${this.iconColor.markerIcon}" class="markerIcon">`,
+        html: `${this.createSvg(icon, this.iconColor.color)} <div class="markerInfo"><img src="${this.iconColor.markerIcon}" class="markerIcon"><div class="plate">${this.popup_data.title}</div></div>`,
         iconSize: [35, 45],
         iconAnchor: [24, 5],
         popupAnchor: [1, -32],
@@ -203,9 +203,26 @@ export default {
 }
 .markerIcon {
   width: 36px !important;
-  margin-top: -75px !important;
+  margin-top: -1px !important;
+  position: relative;
+  left: -83px;
+}
+.markerInfo{
   position: absolute;
-  left: 4px;
+    left: -120px;
+    top: -42px;
+    background-color: rgba(47, 64, 80, 0.9) !important;
+    width: 250px;
+    height: 40px;
+    padding: 5px;
+}
+.plate{
+  color: white;
+  position: absolute;
+  top: 10px;
+  font-size: 15px;
+  left: 76px;
+  max-width: 200px;
 }
 
 </style>

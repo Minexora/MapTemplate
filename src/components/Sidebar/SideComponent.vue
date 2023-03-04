@@ -148,14 +148,14 @@ export default {
       },
       menuItems: [
         {
+          type: 'home',
+          icon: require('@/assets/images/report (1).png'),
+          name: 'Anasayfa'
+        },
+        {
           type: 'vehicle_fence',
           icon: require('@/assets/images/report (1).png'),
           name: 'Araç Fence Raporu'
-        },
-        {
-          type: 'vehicle_expedition',
-          icon: require('@/assets/images/expedition.png'),
-          name: 'Araç Sefer Raporu'
         },
         {
           type: 'fence',
@@ -166,6 +166,11 @@ export default {
           type: 'distance',
           icon: require('@/assets/images/distance1.png'),
           name: 'Araç Distance Raporu'
+        },
+        {
+          type: 'history',
+          icon: require('@/assets/images/expedition.png'),
+          name: 'Geçmiş İzleme'
         }
       ]
     }
@@ -215,10 +220,6 @@ export default {
         this.modalData.title = 'Araç Fence Raporu'
         this.modalData.type = type
         this.modalData.okOnly = true
-      } else if (type === 'vehicle_expedition') {
-        this.modalData.title = 'Araç Sefer Raporu'
-        this.modalData.type = type
-        this.modalData.okOnly = true
       } else if (type === 'fence') {
         this.modalData.title = 'Fence Raporu'
         this.modalData.type = type
@@ -227,6 +228,11 @@ export default {
         this.modalData.title = 'Araç Distance Raporu'
         this.modalData.type = type
         this.modalData.okOnly = true
+      } else if (['history', 'home'].includes(type)) {
+        this.modal = false
+        this.$router.push({ name: type }).catch((err) => {
+          console.log(err)
+        })
       }
     },
     getUserData () {

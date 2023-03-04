@@ -8,6 +8,8 @@ export default {
   getVehicleDistanceReport: 'Tracker/GetDiffDistsExp2',
   GetDeviceDataForLastTenMinutes: '/Tracker/GetDeviceDataForLastTenMinutes',
   getDeviceData: '/Tracker/GetDeviceData',
+  getRegionList: '/Tracker/GetRegionList',
+  getDeviceRegionData: '/Tracker/GetDeviceRegionData',
 
   // This will be prefixed in authorization header with token
   // e.g. Authorization: Bearer <token>
